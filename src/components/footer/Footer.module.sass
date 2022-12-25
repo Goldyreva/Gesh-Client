@@ -1,0 +1,40 @@
+.root
+  margin: 0
+  margin-top: 4vw
+  padding: 2vw 0
+  display: flex
+  justify-content: space-between
+  background: #1C1C1C
+.root div
+  width: 33%
+  display: flex
+  justify-content: center
+  align-items: center
+.root div img
+  width: 40%
+.root div p
+  color: white
+  font-size: 1.2vw
+  font-family: 'Open Sans', sans-serif
+.root div a
+  color: white
+  font-size: 1.3vw
+  font-family: 'Open Sans', sans-serif
+  transition: 0.2s all linear
+.root div a:hover
+  color: #FF8A36
+
+@media screen and (max-width: 680px)
+  .root
+    flex-direction: column
+  .root div
+    width: 100%
+  .root div img
+    width: 35%
+    margin-top: 20px
+  .root div p
+    font-size: 3vw
+    margin: 30px 0
+  .root div a
+    font-size: 3vw
+    margin-bottom: 20px

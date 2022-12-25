@@ -1,0 +1,112 @@
+.root
+  margin: 0
+  padding: 20px 8vw 0 8vw
+
+  &__header
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+  &__h2_cont
+    background: linear-gradient(#FF8A36, rgba(255, 255, 255, 0))
+    border-radius: 30px
+    padding: 1px
+
+  &__header h2
+    margin: 0
+    color: white
+    background: #161616
+    padding: 10px 50px
+    font-family: 'Manrope', sans-serif
+    font-weight: 600
+    font-size: 1.4vw
+    border-radius: 30px
+    text-transform: uppercase
+
+  &__header h4
+    font-family: 'Open Sans', sans-serif
+    font-size: 1.4vw
+    color: white
+    font-weight: 400
+    text-align: left
+    width: 50%
+    margin-right: 10%
+
+  &__tourist_cont
+    display: flex
+    justify-content: space-between
+    padding: 5vw 0
+
+  &__tourist_item
+    width: 27vw
+    height: 31vw
+    background-size: 100%
+    background-repeat: no-repeat
+    border-radius: 0.4vw
+    display: flex
+    flex-direction: column
+    align-items: center
+    padding: 1vw
+
+  &__tourist_item:nth-child(1)
+    background-image: url("../../../img/tourist1.png")
+
+  &__tourist_item:nth-child(2)
+    background-image: url("../../../img/tourist2.png")
+
+  &__tourist_item:nth-child(3)
+    background-image: url("../../../img/tourist3.png")
+
+  &__tourist_item h5
+    font-family: 'Manrope', sans-serif
+    color: white
+    font-weight: 600
+    font-size: 1.4vw
+    margin-top: 60%
+    text-align: center
+
+  &__tourist_item p
+    font-family: 'Open Sans', sans-serif
+    font-size: 1.2vw
+    color: white
+    font-weight: 400
+    width: 66%
+  &__tourist_item:nth-child(2) p
+    width: 60%
+    margin-left: 7%
+
+@media screen and (max-width: 680px)
+  .root
+    &__header
+      flex-direction: column
+      align-items: flex-start
+    &__h2_cont h2
+      font-size: 4vw
+    &__header h4
+      font-size: 3vw
+      width: 100%
+      line-height: 6vw
+    &__tourist_cont
+      flex-wrap: wrap
+    &__tourist_item
+      width: 48%
+      height: 46vw
+      justify-content: flex-end
+      align-items: flex-start
+      padding: 1vw 2vw
+    &__tourist_item:nth-child(1)
+      width: 100%
+      margin-bottom: 4%
+      background-image: url("../../../img/tourist1Mob.png")
+    &__tourist_item h5
+      margin: 0
+      font-size: 3vw
+      display: flex
+      text-align: left
+    &__tourist_item p
+      font-size: 2vw
+      line-height: 3vw
+      width: 90%
+    &__tourist_item:nth-child(2) p
+      margin-left: 0
+      width: 90%

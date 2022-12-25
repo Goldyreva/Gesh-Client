@@ -1,0 +1,123 @@
+.root
+  width: 100vw
+  height: 100vh
+  background: rgba(0, 0, 0, 0.4)
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 101
+  display: flex
+  justify-content: center
+  align-items: center
+  opacity: 0
+  pointer-events: none
+  transition: 0.2s all linear
+  h3
+    color: white
+    font-family: 'Manrope', sans-serif
+    text-align: center
+    font-size: 22px
+    text-transform: uppercase
+    font-weight: 800
+  &__modal_content
+    background-image: url("../../img/popUpBg.jpg")
+    background-size: cover
+    background-position: center top
+    padding: 20px
+    width: 500px
+    //min-height: 200px
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    align-items: center
+    border-radius: 16px
+  &__header
+    //align-self: flex-end !important
+    width: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    display: flex
+    justify-content: space-between
+    align-items: flex-start
+  &__header_img
+    width: 15px
+  &__header svg
+    height: 15px
+  &__header_close
+    cursor: pointer
+  &__header_close:hover path
+    fill: #FF8A36
+    transition: all 0.2s linear
+  &__h2_cont
+    background: linear-gradient(#FF8A36, rgba(255, 255, 255, 0))
+    border-radius: 30px
+    padding: 1px
+    cursor: pointer
+  &__h2_cont:hover h2
+    background: rgba(22, 22, 22, 0.56)
+  &__h2_cont:active h2
+    background: #000000
+
+  &__header h2
+    margin: 0
+    color: white
+    background: #161616
+    padding: 10px 25px
+    font-family: 'Manrope', sans-serif
+    font-weight: 600
+    font-size: 16px
+    border-radius: 30px
+    text-transform: uppercase
+    transition: all 0.2s linear
+  &_auth, &_reg
+    width: 80%
+  form
+    display: flex
+    flex-direction: column
+    align-items: center
+  input
+    background-color: white !important
+    border-radius: 5px !important
+    border: none !important
+    -webkit-box-shadow: 0px 5px 8px 0px rgba(29, 51, 68, 0.5) inset !important
+    -moz-box-shadow: 0px 5px 8px 0px rgba(29, 51, 68, 0.5) inset !important
+    box-shadow: 0px 5px 8px 0px rgba(29, 51, 68, 0.5) inset !important
+    margin: 7px 0 !important
+    font-family: 'Open Sans', sans-serif !important
+    padding: 0 2% !important
+
+  input:hover
+    -webkit-box-shadow: 0px 5px 8px 0px rgba(29, 51, 68, 0.28) inset !important
+    -moz-box-shadow: 0px 5px 8px 0px rgba(29, 51, 68, 0.28) inset !important
+    box-shadow: 0px 5px 8px 0px rgba(29, 51, 68, 0.28) inset !important
+  input:focus
+    -webkit-box-shadow: 0px -5px 8px 0px rgba(29, 51, 68, 0.28) inset !important
+    -moz-box-shadow: 0px -5px 8px 0px rgba(29, 51, 68, 0.28) inset !important
+    box-shadow: 0px -5px 8px 0px rgba(29, 51, 68, 0.28) inset !important
+  &__btn_submit
+    color: white
+    background-color: #FF8A36
+    border: none
+    outline: none
+    box-shadow: none
+    border-radius: 16px
+    padding: 2% 16%
+    font-family: 'Manrope', sans-serif
+    font-size: 20px
+    text-transform: uppercase
+    cursor: pointer
+    transition: all 0.2s linear
+    margin: 10px 0
+  &__btn_submit:hover
+    background-color: #ff9345
+  &__btn_submit:active
+    background-color: #e87117 !important
+.active
+  opacity: 1
+  pointer-events: all
+
+.activeTab
+  display: block
+.nonActiveTab
+  display: none

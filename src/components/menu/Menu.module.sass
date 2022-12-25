@@ -1,0 +1,48 @@
+.root
+  position: fixed
+  width: 350px
+  height: 103vh
+  left: 0
+  top: -20px
+  margin: 0
+  z-index: 100
+  transform: translateX(-100%)
+  transition: all 0.3s linear
+
+  &__menu_cont
+    width: 100%
+    height: 100%
+    background: white
+    transform: translateX(-100%)
+    transition: all 0.3s linear
+    padding: 30px 10px 0 20%
+    display: flex
+    flex-direction: column
+    -webkit-box-shadow: 0px 5px 5px 2px rgba(34, 60, 80, 0.2)
+    -moz-box-shadow: 0px 5px 5px 2px rgba(34, 60, 80, 0.2)
+    box-shadow: 0px 5px 5px 2px rgba(34, 60, 80, 0.2)
+  &__close
+    align-self: flex-end
+    cursor: pointer
+.root ul
+  display: flex
+  flex-direction: column
+  margin-top: 30px
+.root ul li
+  padding: 10px 0
+.root ul li a
+  font-family: 'Open Sans', sans-serif
+  font-weight: 300
+  font-size: 20px
+  color: #161616
+  text-transform: uppercase
+  transition: all 0.2s linear
+.root ul li a:hover
+  color: #FF8A36
+.root ul li:nth-child(1) a
+  text-decoration: underline
+  text-underline-position: under
+  text-decoration-color: #FF8A36
+
+.active
+  transform: translateX(0)

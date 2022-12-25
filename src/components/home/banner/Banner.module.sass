@@ -1,0 +1,145 @@
+//@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Open+Sans:wght@300;400&display=swap')
+
+.root
+  margin: 0
+  padding: 0
+  &__btn_cont
+    height: 180px
+    width: 370px
+    position: absolute
+    left: 60vw
+    border-radius: 120px
+    top: 190px
+    background: white
+    padding-bottom: 10px
+  &__btn
+    position: absolute
+    height: 153px
+    width: 153px
+    background: #FF8A36
+    z-index: 100
+    border-radius: 50%
+    top: 2px
+    left: 103px
+    border: 10px white solid
+    display: flex
+    justify-content: center
+    align-items: center
+    text-decoration: none
+    transition: all 0.2s linear
+  &__btn:hover
+    background: #ff9345
+  &__btn:active
+    background: #e87117
+  &__btn p
+    font-family: 'Manrope', sans-serif
+    font-weight: 600
+    text-transform: uppercase
+    color: white
+
+  &__btn_circle
+    display: inline-block
+    width: 150px
+    height: 150px
+    position: relative
+    border-radius: 50%
+  &__btn_circle:after
+    border-radius: 50%
+    display: block
+    content: ""
+    background: linear-gradient(#FF8A36, #ffff)
+    position: absolute
+    left: 102px
+    top: 0px
+    height: 156px
+    width: 156px
+    animation: 1.5s linear 0s normal none infinite running rot
+    -webkit-animation: 1.5s linear 0s normal none infinite running rot
+    -webkit-box-sizing: border-box
+    box-sizing: border-box
+  &__img
+    width: 100%
+    overflow: hidden
+    height: 500px
+  &__img img
+    width: 100%
+    object-fit: cover
+    height: 100%
+    position: center
+
+.root h5
+  font-family: 'Open Sans', sans-serif
+  font-size: 18px
+  font-weight: 300
+  margin: 40px 0 20px 50vw
+
+.root h1
+  font-family: 'Manrope', sans-serif
+  font-size: 65px
+  font-weight: 800
+  margin: 20px 0 50px 10vw
+
+@media screen and (max-width: 935px)
+  .root
+    &__btn_cont
+      height: 180px
+      width: 260px
+      right: 10px
+      top: 280px
+      left: auto
+      border-radius: 200px
+
+    &__btn
+      right: -57px
+      left: auto
+    &__btn_circle:after
+      left: auto
+      right: -60px
+
+  .root h1
+    margin: 20px 0 100px 5vw
+    font-size: 10vw
+  .root h5
+    font-family: 'Open Sans', sans-serif
+    font-size: 18px
+    text-align: right
+    font-weight: 300
+    margin: 40px 5vw 20px 5vw
+
+@media screen and (max-width: 680px)
+  .root
+    &__btn_cont
+      height: 180px
+      width: 260px
+      right: 10px
+      top: 375px
+      left: auto
+      border-radius: 200px
+
+    &__btn
+      right: -57px
+      left: auto
+    &__btn_circle:after
+      left: auto
+      right: -60px
+
+  .root h1
+    margin: 20px 0 100px 5vw
+    font-size: 10vw
+  .root h5
+    font-family: 'Open Sans', sans-serif
+    font-size: 18px
+    text-align: right
+    font-weight: 300
+    margin: 40px 5vw 20px 5vw
+
+
+
+
+@keyframes rot
+  0%
+    transform: rotate(0deg)
+
+  100%
+    transform: rotate(360deg)
+

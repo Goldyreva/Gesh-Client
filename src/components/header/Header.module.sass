@@ -1,0 +1,108 @@
+
+.root
+  display: flex
+  justify-content: space-around
+  height: 80px
+  padding: 10px
+  background: #ffffff
+  &__padding
+    width: 33%
+  &__logo_cont
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 33%
+  &__logo
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 10px 10px
+  &__logo img
+    width: 100%
+    margin-right: 20px
+  &__contact
+    font-family: 'Open Sans', sans-serif
+    font-weight: 300
+    display: flex
+    flex-direction: column
+    justify-content: flex-end
+    align-items: center
+    width: 33%
+
+  &__contact_cont
+    display: flex
+    align-items: center
+    margin-bottom: 10px
+  &__contact_cont a
+    text-decoration: none
+    font-size: 17px
+  &__contact_cont img
+    margin-right: 15px
+  &__contact a
+    color: #161616
+    transition: all 0.2s linear
+  &__contact a:hover
+    color: #FF8A36
+  &__contact_order
+    margin-left: 40px
+    font-size: 15px
+    text-decoration: underline
+    text-underline-position: under
+    text-decoration-color: #FF8A36
+  &__popUpBtn_cont
+    display: flex
+    justify-content: center
+    align-items: center
+    margin-left: 20px
+  &__popUpBtn
+    background: #FF8A36
+    border-radius: 50%
+    width: 40px
+    height: 40px
+    display: flex
+    align-items: center
+    justify-content: center
+    transition: all 0.2s linear
+    margin-left: 10px
+    position: relative
+
+  &__popUpBtn:hover
+    background: #ff9345
+  &__popUpBtn p
+    font-family: 'Open Sans', sans-serif
+    font-size: 12px
+    position: absolute
+    width: 20px
+    height: 20px
+    border-radius: 50%
+    text-align: center
+    background: #1C1C1C
+    color: white
+    top: -15px
+    right: -5px
+@media screen and (max-width: 680px)
+  .root
+    flex-direction: column
+    align-items: flex-end
+    height: 200px
+    &__logo_cont
+      display: flex
+      justify-content: flex-end
+      flex-direction: row-reverse
+      align-items: center
+      width: 70%
+    &__logo
+      margin-left: 20px
+    &__contact
+      align-items: flex-end
+      width: 100%
+      padding: 0 20px
+
+
+
+
+
+
+
+
+

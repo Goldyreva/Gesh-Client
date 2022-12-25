@@ -1,0 +1,183 @@
+.root
+  font-family: 'Open Sans', sans-serif
+  min-height: calc(100vh - 80px)
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  h4
+    margin: 0
+  &__header
+    width: 80%
+    margin: 0 auto
+    p
+      font-size: 1.5rem
+    h2
+      font-weight: bold
+  &__main
+    display: flex
+    justify-content: space-between
+    align-items: flex-start
+    width: 80%
+    margin: 0 auto
+  &__wrapper_person
+    border-radius: 10px
+    overflow: hidden
+    background: linear-gradient(200deg, #ff8a36, rgba(213, 58, 157, 0))
+    width: 400px
+    padding: 2px
+    box-shadow: 0px 4px 6px -1px rgba(34, 60, 80, 0.37)
+  &__wrapper_order
+    border-radius: 10px
+    overflow: hidden
+    background: linear-gradient(200deg, #ff8a36, rgba(213, 58, 157, 0))
+    width: 60%
+    margin-left: 2vw
+    padding: 2px
+    box-shadow: 0px 4px 6px -1px rgba(34, 60, 80, 0.37)
+
+  &__person
+    display: flex
+    flex-direction: column
+    width: 100%
+    height: 100%
+    margin: auto
+    border-radius: 8px
+    background-color: white
+    padding: 2vw
+  &__person_header
+    display: flex
+    justify-content: space-between
+    align-items: center
+  &__header_icon
+    display: flex
+    align-items: center
+  &__person_header svg
+    width: 26px
+    height: 26px
+  &__person_header svg path
+    //width: 26px
+    //height: 26px
+    //color: black
+  &__order
+    display: flex
+    flex-direction: column
+    width: 100%
+    height: 100%
+    margin: auto
+    border-radius: 8px
+    background-color: white
+    padding: 2vw
+    span
+      font-weight: 800
+  &__order_content
+    display: flex
+    flex-direction: column
+  &__order_grid
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr 1fr
+    div
+      padding: 5px
+
+  &__orders &__order_content:not(:first-child) .grid_header
+    display: none
+
+
+  form
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+
+
+  &__input_cont
+    display: flex
+    justify-content: space-between
+    border-bottom: 1px solid #B4B4B4
+    margin: 20px 0
+    width: 100%
+    p
+      margin: 0
+    label
+      width: 300px !important
+      color: black
+      font-size: 16px
+    input
+      padding: 0
+      border: none !important
+      height: auto !important
+      text-align: right
+      border-bottom: 1px solid rgba(255, 138, 54, 0) !important
+      transition: all 0.4s linear
+      overflow: visible
+      margin-bottom: -1px !important
+      color: black
+      margin-left: 10px !important
+    input:hover
+      border-bottom: 1px solid #e87117 !important
+      color: #ff8a36
+    input:focus
+      box-shadow: none !important
+      color: #4d4d4d
+      text-align: left
+    input:disabled
+      color: black !important
+    input:disabled:hover
+      border-bottom: 1px solid rgba(232, 113, 23, 0) !important
+  &__btn_submit
+    color: white
+    background-color: #FF8A36
+    border: none
+    outline: none
+    box-shadow: none
+    border-radius: 14px
+    padding: 4% 10%
+    font-family: 'Manrope', sans-serif
+    font-size: 14px
+    text-transform: uppercase
+    cursor: pointer
+    transition: all 0.2s linear
+    margin: 10px 0
+  &__btn_submit:hover
+    background-color: #ff9345
+  &__btn_submit:active
+    background-color: #e87117 !important
+
+svg.nonActive, p.nonActive
+  display: none
+svg.active, p.active
+  display: block
+@media screen and (max-width: 1024px)
+  .root
+    &__main
+      flex-direction: column
+    &__wrapper_person
+      width: 100%
+    &__wrapper_order
+      width: 100%
+      margin-left: 0
+      margin-top: 2vw
+    &__btn_submit
+      padding: 2% 5%
+@media screen and (max-width: 560px)
+  .root
+    &__header
+      h2
+        font-size: 6vw
+        text-align: center
+    &__order
+    &__orders &__order_content:not(:first-child) .grid_header
+      display: grid
+    &__order_content
+      flex-direction: row
+      justify-content: space-between
+      margin-top: 4vw
+    &__order_content &__order_grid
+      display: grid
+      grid-template-columns: 1fr
+      div
+        padding: 5px
+
+
+
+
+
+
