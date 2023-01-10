@@ -2,29 +2,100 @@ import React, {useContext, useState} from 'react';
 import s from "./Modal.module.sass";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
+import {login, registration} from "../../http/userApi";
 
 const Modal = observer(() => {
-    let {modal} = useContext(Context)
+    let {modal, user} = useContext(Context)
     const [tab, setTab] = useState(false)
+    const [emailDirty, setEmailDirty] = useState(false)
+    const [passwordDirty, setPasswordDirty] = useState(false)
+    const [nameDirty, setNameDirty] = useState(false)
+    const [phoneDirty, setPhoneDirty] = useState(false)
+    const [emailError, setEmailError] = useState("E-mail не может быть пустым")
+    const [passwordError, setPasswordError] = useState("Пароль не может быть пустым")
+    const [nameError, setNameError] = useState("Имя не может быть пустым")
+    const [phoneError, setPhoneError] = useState("Телефон не может быть пустым")
+    const [authError, setAuthError] = useState("")
+    const [regError, setRegError] = useState("")
     const [regField , setRegField] = useState({
         name: '',
         email: '',
         phone: '',
         password: ''
     })
+    //registration
     const regHandler = (e) =>{
-        setRegField( regField => ({...regField, [e.target.name]: e.target.value}))
-    }
+        if(e.target.name !== 'phone'){
+            setRegField( regField => ({...regField, [e.target.name]: e.target.value}))
+        }
+        const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        // const tel = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/
+        if(e.target.name === 'email' && !re.test(String(e.target.value).toLowerCase())){
+            setEmailError('Некорректный E-mail')
+        }else{
+            setEmailError('')
+        }
+        if(e.target.name === 'name' && e.target.value.length < 2){
+            setNameError('Некорректное имя')
+        }else{
+            setNameError('')
+        }
+        if(e.target.name === 'password' && e.target.value.length < 8 && e.target.value.length > 0){
+            setPasswordError('Пароль не может быть меньше 8 символов')
+        }else{
+            setPasswordError('')
+        }
+        if(e.target.name === 'phone'){
+            e.target.value = e.target.value.replace(/\D/g, "")
+            let inputValue =""
+            if(["7", "8", "9"].indexOf(e.target.value[0]) > -1){
+                if(e.target.value[0] === "9"){
+                    e.target.value = "7" + e.target.value
+                }
+                let firstSymbols = (e.target.value[0] === "8") ? "8" : "+7"
+                inputValue = firstSymbols + " "
+                if(e.target.value.length > 1){
+                    inputValue += "(" + e.target.value.substring(1, 4)
 
-    const regButton = () =>{
-        // setRegField(false)
-        console.log(regField)
-        modal.setActive(false)
-        //вставить отправку данных
-        //вставить очистку полей
-        //вставить автоматическую авторизацию
+                }
+                if(e.target.value.length >= 5){
+                    inputValue += ") " + e.target.value.substring(4, 7)
+                }
+                if(e.target.value.length >= 8){
+                    inputValue += "-" + e.target.value.substring(7, 9)
+                }
+                if(e.target.value.length >= 10){
+                    inputValue += "-" + e.target.value.substring(9, 11)
+                }
+            }else{
+                inputValue = "+" + e.target.value
+            }
+            e.target.value = inputValue
+            console.log(e.target.value)
+            console.log(e.target.value.length)
+            setRegField( regField => ({...regField, [e.target.name]: e.target.value}))
+            setPhoneError('')
+        }
     }
-
+    const blurHandler = (e) => {
+        switch (e.target.name){
+            case 'email':
+                setEmailDirty(true)
+                break
+            case 'password':
+                setPasswordDirty(true)
+                break
+            case 'name':
+                setNameDirty(true)
+                break
+            case 'phone':
+                setPhoneDirty(true)
+                break
+            default:
+                break
+        }
+    }
+    //auth
     const [authField , setAuthField] = useState({
         email: '',
         password: ''
@@ -32,14 +103,29 @@ const Modal = observer(() => {
     const authHandler = (e) =>{
         setAuthField( authField => ({...authField, [e.target.name]: e.target.value}))
     }
+    console.log(authField)
+    console.log(regField)
+    //reg and auth function
+    const regAuth = async () => {
+        let data
+        try {
+            if(tab === false){
+                data = await login(authField.email,authField.password)
+                console.log(data)
+            }else{
+                data = await registration(regField.email, regField.phone, regField.name, regField.password)
+                console.log(data)
+            }
+            user.setIsUser(user)
+            user.setIsAuth(true)
 
-    const authButton = () =>{
-        // setRegField(false)
-        console.log(authField)
-        modal.setActive(false)
-        //вставить отправку данных
-        //вставить очистку полей
-        //вставить автоматическую авторизацию
+        } catch (e){
+            if(tab === false) {
+                setAuthError(e.response.data.message)
+            }else{
+                setRegError(e.response.data.message)
+            }
+        }
     }
     return (
 
@@ -56,11 +142,16 @@ const Modal = observer(() => {
                 <div className={tab ? `${s.root_reg} ${s.activeTab}` : `${s.root_reg} ${s.nonActiveTab}`}>
                     <h3>Для входа  на сайт пройдите регистрацию ниже</h3>
                     <form action="" className={s.root__form}>
-                        <input type="text" className={s.root__form_name} placeholder="Ваше имя" onChange={regHandler} name="name"/>
-                        <input type="email" className={s.root__form_email} placeholder="Ваш E-mail" onChange={regHandler} name="email"/>
-                        <input type="tel" className={s.root__form_phone} placeholder="+7 (999) 999-99-99" onChange={regHandler} name="phone"/>
-                        <input type="password" className={s.root__form_password} placeholder="Ваш пароль" onChange={regHandler} name="password"/>
-                        <p onClick={regButton} className={s.root__btn_submit}>Зарегестрироваться</p>
+                        <input type="text" className={s.root__form_name} placeholder="Ваше имя" onChange={regHandler} onBlur={e => blurHandler(e)} name="name"/>
+                        {(nameDirty && nameError) && <div>{nameError}</div>}
+                        <input type="email" className={s.root__form_email} placeholder="Ваш E-mail" onChange={regHandler} onBlur={e => blurHandler(e)} name="email"/>
+                        {(emailDirty && emailError) && <div>{emailError}</div>}
+                        <input type="tel" className={s.root__form_phone} placeholder="+7 (999) 999-99-99" maxLength="18" onChange={regHandler} onBlur={e => blurHandler(e)} name="phone"/>
+                        {(phoneDirty && phoneError) && <div>{phoneError}</div>}
+                        <input type="password" className={s.root__form_password} placeholder="Ваш пароль" onChange={regHandler} onBlur={e => blurHandler(e)} name="password"/>
+                        {(passwordDirty && passwordError) && <div>{passwordError}</div>}
+                        <div>{regError}</div>
+                        <p onClick={regAuth} className={s.root__btn_submit}>Зарегестрироваться</p>
                     </form>
                 </div>
                 <div className={tab ? `${s.root_auth} ${s.nonActiveTab}` : `${s.root_auth} ${s.activeTab}`}>
@@ -68,7 +159,8 @@ const Modal = observer(() => {
                     <form action="" className={s.root__form}>
                         <input type="email" className={s.root__form_email} placeholder="Ваш E-mail" onChange={authHandler} name="email"/>
                         <input type="password" className={s.root__form_password} placeholder="Ваш пароль" onChange={authHandler} name="password"/>
-                        <p onClick={authButton} className={s.root__btn_submit}>Войти</p>
+                        <div>{authError}</div>
+                        <p onClick={regAuth} className={s.root__btn_submit}>Войти</p>
                     </form>
                 </div>
             </div>

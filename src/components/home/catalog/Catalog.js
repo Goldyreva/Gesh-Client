@@ -42,7 +42,6 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
     const [activePeople, setActivePeople] = useState(false);
     const [activeDate, setActiveDate] = useState(false);
 
-    const [visibleRooms, setVisibleRooms] = useState(rooms)
 
 
     const onChange = (dates) => {
@@ -58,11 +57,6 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
         setRangeDate(`ОТ ${sDate} ДО ${eDate}`)
     }, [startDate, endDate])
 
-    // function getSortedRooms(activeType){
-    //     setVisibleRooms([...rooms].sort((a, b) => a[activeType].localeCompare()))
-    //     console.log(activeType)
-    // }
-    // const sortedRooms
 
     // const searchRoom = () => {
     //     let people = peopleCount + kidCount
@@ -150,7 +144,7 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
                 </form>
             </div>
             <div className={s.root__cart_cont}>
-                {visibleRooms.map(item =>
+                {rooms.map(item =>
                     <div className={s.root__cart} key={item.id}>
                         <img src={`${process.env.REACT_APP_API_URL}${item.img}`} alt=""/>
                         <div className={s.root__cart_header}>

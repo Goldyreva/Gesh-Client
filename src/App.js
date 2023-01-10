@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import './App.css';
 import Header from "./components/header/Header";
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter} from 'react-router-dom';
 import AppRouter from "./components/AppRouter";
 import Menu from "./components/menu/Menu";
 import Hamburger from "./components/hamburger/Hamburger";
@@ -17,20 +17,20 @@ function App() {
     //     return !menuActive
     // }
 
-      return (
+    return (
         <BrowserRouter>
-            <Menu/>
-                <Hamburger/>
-            <Header/>
+        <Menu/>
+        <Hamburger/>
+        <Header/>
 
-            <AppRouter/>
-            <Modal/>
-            <Cart/>
-            <OrderDetails/>
-            <Barcode/>
+        <AppRouter/>
+        <Modal/>
+        <Cart/>
+        <OrderDetails/>
+        <Barcode/>
 
         </BrowserRouter>
-  );
+);
 }
 
 export default App;

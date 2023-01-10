@@ -1,5 +1,5 @@
 import Admin from "./pages/admin/Admin";
-import {ADMIN_ROUTE, HOME_ROUTE, REGISTRATION_ROUTE, LOGIN_ROUTE, ACCOUNT_ROUTE} from "./utils/consts";
+import {ADMIN_ROUTE, HOME_ROUTE, ACCOUNT_ROUTE} from "./utils/consts";
 import Home from "./pages/home/Home";
 import Account from "./pages/account/Account";
 
