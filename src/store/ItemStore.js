@@ -18,7 +18,7 @@ export default class ItemStore{
     setTypes(types){
         this._types = types
     }
-    setIsUser(items){
+    setIsItem(items){
         this._items = items
     }
 

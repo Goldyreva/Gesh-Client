@@ -9,8 +9,7 @@ export const authRoutes = [
         Component: Admin
     },
     {
-        // path: ACCOUNT_ROUTE + '/:id',
-        path: ACCOUNT_ROUTE + '',
+        path: ACCOUNT_ROUTE + '/:id',
         Component: Account
     },
 ]

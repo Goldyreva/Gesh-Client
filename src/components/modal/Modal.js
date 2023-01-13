@@ -103,22 +103,19 @@ const Modal = observer(() => {
     const authHandler = (e) =>{
         setAuthField( authField => ({...authField, [e.target.name]: e.target.value}))
     }
-    console.log(authField)
-    console.log(regField)
+
     //reg and auth function
     const regAuth = async () => {
         let data
         try {
             if(tab === false){
                 data = await login(authField.email,authField.password)
-                console.log(data)
             }else{
                 data = await registration(regField.email, regField.phone, regField.name, regField.password)
-                console.log(data)
             }
-            user.setIsUser(user)
+            user.setUser(data)
             user.setIsAuth(true)
-
+            modal.setActive(false)
         } catch (e){
             if(tab === false) {
                 setAuthError(e.response.data.message)
@@ -128,7 +125,6 @@ const Modal = observer(() => {
         }
     }
     return (
-
         <div className={modal.isActive ? `${s.root} ${s.active}` : `${s.root}`} onClick={() => modal.setActive(false)}>
             <div className={s.root__modal_content} onClick={e =>e.stopPropagation()}>
                 <div className={s.root__header}>

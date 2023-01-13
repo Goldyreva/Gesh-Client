@@ -1,7 +1,7 @@
 import s from './Header.module.sass';
 import logo from '../../img/logo.png';
 import phone from '../../img/phone.png';
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import {HOME_ROUTE} from "../../utils/consts";
 import reg from '../../img/reg.png';
 import cartImg from '../../img/cart.png';
@@ -11,7 +11,13 @@ import {observer} from "mobx-react-lite";
 
 
 const Header = observer(() => {
-    let {modal, cart} = useContext(Context)
+    let {modal, cart, user} = useContext(Context)
+    const history= useHistory()
+    const logOut = () => {
+        user.setUser({})
+        user.setIsAuth(false)
+        history.push(HOME_ROUTE)
+    }
     return (
         <div className={s.root}>
             <div className={s.root__padding}></div>
@@ -20,8 +26,11 @@ const Header = observer(() => {
                     <img src={logo} alt="logo"/>
                 </NavLink>
                 <div className={s.root__popUpBtn_cont}>
-                    <a className={s.root__popUpBtn} onClick={() => cart.setActive(true)}><img src={cartImg} alt=""/> <p>1</p></a>
-                    <a className={s.root__popUpBtn} onClick={() => modal.setActive(true)}><img src={reg} alt=""/></a>
+                    {user.isAuth
+                        ?<><a className={s.root__popUpBtn} onClick={() => cart.setActive(true)}><img src={cartImg} alt=""/> <p>1</p></a><a className={s.root__popUpBtn} onClick={() => logOut()}><img src={reg} alt=""/></a></>
+                        :<a className={s.root__popUpBtn} onClick={() => modal.setActive(true)}><img src={reg} alt=""/></a>
+                    }
+
 
                 </div>
             </div>
