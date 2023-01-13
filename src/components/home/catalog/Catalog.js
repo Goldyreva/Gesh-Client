@@ -42,8 +42,6 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
     const [activePeople, setActivePeople] = useState(false);
     const [activeDate, setActiveDate] = useState(false);
 
-
-
     const onChange = (dates) => {
         const [start, end] = dates;
         setStartDate(start);
@@ -52,8 +50,8 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
     };
 
     useEffect(() => {
-        let sDate = startDate ? `${startDate.getDay()}.${startDate.getMonth()}.${startDate.getFullYear()}` : ''
-        let eDate = endDate ? `${endDate.getDay()}.${endDate.getMonth()}.${endDate.getFullYear()}` : ''
+        let sDate = startDate ? startDate.toLocaleDateString('ru-RU') : ''
+        let eDate = endDate ? endDate.toLocaleDateString('ru-RU') : ''
         setRangeDate(`ОТ ${sDate} ДО ${eDate}`)
     }, [startDate, endDate])
 
