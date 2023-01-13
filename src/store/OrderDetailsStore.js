@@ -5,9 +5,9 @@ export default class OrderDetailsStore {
     constructor() {
         this._active = false
         this._id = null
+        this._orders = {}
         makeAutoObservable(this)
     }
-
     setActive (bool) {
         this._active = bool
     }
@@ -22,6 +22,9 @@ export default class OrderDetailsStore {
 
     get isId () {
         return this._id
+    }
+    get orders(){
+        return this._orders
     }
 
 }

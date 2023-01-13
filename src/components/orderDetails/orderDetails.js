@@ -1,10 +1,35 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import s from "./orderDetails.module.sass";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 
 const OrderDetails = observer(() => {
-    let {orderDetails} = useContext(Context)
+    let {orderDetails, item} = useContext(Context)
+    const [thisOrder, setThisOrder] = useState({})
+    const [thisRoom, setThisRoom] = useState({})
+    const [thisType, setThisType] = useState({})
+    useEffect(() => {
+        orderDetails.orders.forEach((item) => {
+            if(item.id === orderDetails.isId){
+                setThisOrder(item)
+            }
+        })
+    }, [orderDetails.isId])
+    useEffect(() => {
+        item.items.forEach((item) => {
+            if(item.id === thisOrder.itemId){
+                setThisRoom(item)
+            }
+        })
+    }, [thisOrder])
+
+    useEffect(() => {
+        item.types.forEach((item) => {
+            if(item.id === thisRoom.typeId){
+                setThisType(item)
+            }
+        })
+    }, [thisRoom])
 
     return(
 
@@ -18,8 +43,14 @@ const OrderDetails = observer(() => {
                         </svg>
                     </div>
                 </div>
-                <div>
-                    {orderDetails.isId}
+                <div className={s.root__info_cont}>
+                    <p><b>Номер заказа:</b> {thisOrder.number}</p>
+                    <p><b>Даты пребывания:</b> {`${thisOrder.start_date} - ${thisOrder.end_date}`}</p>
+                    <p><b>Дата создания заказа:</b> {thisOrder.create_date}</p>
+                    <p><b>Статус:</b> {thisOrder.status}</p>
+                    <p><b>Номер:</b> {thisRoom.name}</p>
+                    <p><b>Тип номера: </b>{thisType.name}</p>
+                    <p><b>Стоимость/день:</b> {thisRoom.price}</p>
                 </div>
             </div>
         </div>

@@ -12,7 +12,6 @@ const Menu = observer(() => {
         menu.setActive(false)
         modal.setActive(true)
     }
-    // console.log(window.location.pathname)
     return (
         <div className={menu.isActive ? `${s.root} ${s.active}` : `${s.root}`}>
             <div className={menu.isActive ? `${s.root__menu_cont} ${s.active}` : `${s.root__menu_cont}`}>
@@ -20,7 +19,7 @@ const Menu = observer(() => {
                 <ul>
                     <li>
                         {user.isAuth
-                            ? <NavLink to={ACCOUNT_ROUTE} onClick={() => menu.setActive(false)}>Личный кабинет</NavLink>
+                            ? <NavLink to={`${ACCOUNT_ROUTE}/${user.user.id}`} onClick={() => menu.setActive(false)}>Личный кабинет</NavLink>
                             : <a onClick={popUpLink}>Личный кабинет</a>
                         }
                     </li>
@@ -33,7 +32,6 @@ const Menu = observer(() => {
                     <li>
                         <NavLink to={HOME_ROUTE + "locate"} onClick={() => menu.setActive(false)}>Местоположение</NavLink>
                     </li>
-
                 </ul>
             </div>
         </div>
