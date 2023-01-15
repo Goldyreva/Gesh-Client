@@ -3,9 +3,9 @@ import {makeAutoObservable} from "mobx";
 export default class ItemStore{
     constructor() {
         this._types = [
-            {id: 1, name: "Family"},
-            {id: 2, name: "Gost"},
-            {id: 3, name: "Partner"}
+            {id: 1, name: "Семейный номер"},
+            {id: 2, name: "Гостевой номер"},
+            {id: 3, name: "Номер для пары"}
         ]
         this._items = [
             {id: 1, name: 'Семейный номер', descriprion: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ', price: 6000, img: 'ededc506-0d11-4063-af2e-44cee8420c38.jpg', count_people: 6, typeId: 1 },
