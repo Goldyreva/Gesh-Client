@@ -3,119 +3,23 @@ import s from "./Cart.module.sass";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import {login, registration} from "../../http/userApi";
+import Calendar from "../Calendar/Calendar";
+import CalendarDropdown from "../calendarDropdown/CalendarDropdown";
 
 const Cart = observer(() => {
-    let {cart} = useContext(Context)
+    let {cart, item} = useContext(Context)
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(null);
+    const [rangeDate, setRangeDate] = useState('')
+    const [changeDate, setChangeDate] = useState(false)
+    const [activeDate, setActiveDate] = useState(false);
+    const onChange = (dates) => {
+        const [start, end] = dates;
+        setStartDate(start);
+        setEndDate(end);
+        setChangeDate(true)
+    };
 
-    const [num, setNum] = useState(1)
-    const [emailDirty, setEmailDirty] = useState(false)
-    const [firstnameDirty, setFirstnameDirty] = useState(false)
-    const [nameDirty, setNameDirty] = useState(false)
-    const [phoneDirty, setPhoneDirty] = useState(false)
-    const [emailError, setEmailError] = useState("E-mail не может быть пустым")
-    const [nameError, setNameError] = useState("Имя не может быть пустым")
-    const [firstnameError, setFirstnameError] = useState("Фамилия не может быть пуста")
-    const [phoneError, setPhoneError] = useState("Телефон не может быть пустым")
-    const [regError, setRegError] = useState("")
-    const [regField , setRegField] = useState({
-        name: '',
-        firstname: '',
-        email: '',
-        phone: '',
-    })
-    const regHandler = (e) =>{
-        if(e.target.name !== 'phone'){
-            setRegField( regField => ({...regField, [e.target.name]: e.target.value}))
-        }
-        const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        // const tel = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/
-        if(e.target.name === 'email' && !re.test(String(e.target.value).toLowerCase())){
-            setEmailError('Некорректный E-mail')
-        }else{
-            setEmailError('')
-        }
-        if(e.target.name === 'name' && e.target.value.length < 2){
-            setNameError('Некорректное имя')
-        }else{
-            setNameError('')
-        }
-        if(e.target.name === 'firstname' && e.target.value.length < 8 && e.target.value.length > 0){
-            setFirstnameError("Некорректная фамилия")
-        }else{
-            setFirstnameError('')
-        }
-        if(e.target.name === 'phone'){
-            e.target.value = e.target.value.replace(/\D/g, "")
-            let inputValue =""
-            if(["7", "8", "9"].indexOf(e.target.value[0]) > -1){
-                if(e.target.value[0] === "9"){
-                    e.target.value = "7" + e.target.value
-                }
-                let firstSymbols = (e.target.value[0] === "8") ? "8" : "+7"
-                inputValue = firstSymbols + " "
-                if(e.target.value.length > 1){
-                    inputValue += "(" + e.target.value.substring(1, 4)
-
-                }
-                if(e.target.value.length >= 5){
-                    inputValue += ") " + e.target.value.substring(4, 7)
-                }
-                if(e.target.value.length >= 8){
-                    inputValue += "-" + e.target.value.substring(7, 9)
-                }
-                if(e.target.value.length >= 10){
-                    inputValue += "-" + e.target.value.substring(9, 11)
-                }
-            }else{
-                inputValue = "+" + e.target.value
-            }
-            e.target.value = inputValue
-            console.log(e.target.value)
-            console.log(e.target.value.length)
-            setRegField( regField => ({...regField, [e.target.name]: e.target.value}))
-            setPhoneError('')
-        }
-    }
-    const blurHandler = (e) => {
-        switch (e.target.name){
-            case 'email':
-                setEmailDirty(true)
-                break
-            case 'firstname':
-                setFirstnameDirty(true)
-                break
-            case 'name':
-                setNameDirty(true)
-                break
-            case 'phone':
-                setPhoneDirty(true)
-                break
-            default:
-                break
-        }
-    }
-
-    // const regAuth = async () => {
-    //     let data
-    //     try {
-    //         if(tab == false){
-    //             data = await login(authField.email,authField.password)
-    //             console.log(data)
-    //         }else{
-    //             data = await registration(regField.email, regField.phone, regField.name, regField.password)
-    //             console.log(data)
-    //         }
-    //         user.setIsUser(user)
-    //         user.setIsAuth(true)
-    //
-    //     } catch (e){
-    //         if(tab == false) {
-    //             setAuthError(e.response.data.message)
-    //         }else{
-    //             setRegError(e.response.data.message)
-    //         }
-    //     }
-    // }
     return(
 
         <div className={cart.isActive ? `${s.root} ${s.active}` : `${s.root}`} onClick={() => cart.setActive(false)}>
@@ -129,37 +33,29 @@ const Cart = observer(() => {
                     </div>
                 </div>
                 <div className={s.root__summary}>
-                    <div className={s.root__summary_top}>
-                        <p>Двухместный номер (кровать king size) для 2 гостей</p>
-                        <div className={s.root__summary_input_cont}>
-                            <label htmlFor="">Количество суток</label>
-                            <div className={s.root__input_num}>
-                                <span onClick={() => {
-                                    if(num >= 2){
-                                        setNum(num-1)}
-                                    }
-                                }>-</span>
-                                <input type="number" min={1} value={num} className="number"/>
-                                <span onClick={() => {setNum(num+1)}}>+</span>
-                            </div>
-                        </div>
+                    {cart.getCart.map(i =>
+                    <div className={s.root__summary_top} key={i.id}>
+                        <p>{item.items.filter(item => item.id === i.itemId)[0].name}</p>
+                        {/*<p>{console.log(i)}</p>*/}
+                        {/*<div className={s.root__select_container}>*/}
+                        {/*    <div className={s.root__select_div} onClick={() => setActiveDate(!activeDate)}>*/}
+                        {/*        <p className={`${changeDate ? s.root__par : ''}`}>{changeDate && (rangeDate !== '') ? rangeDate :'ВЫБЕРИТЕ ПЕРИОД'}</p>*/}
+                        {/*        <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
+                        {/*            <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 6L7 8L9 8L9 6L7 6Z"/>*/}
+                        {/*        </svg>*/}
+                        {/*    </div>*/}
+                        {/*    <div className={activeDate ? `${s.root__select_content} ${s.active_date}` : `${s.root__select_content}`}>*/}
+                        {/*        <Calendar startDate={startDate} endDate={endDate} onChange={onChange}/>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        <CalendarDropdown item = {{startDate: i.start_date, endDate: i.end_date}}/>
                     </div>
+                    )}
                     <h4>ИТОГО: 12 000 руб.</h4>
 
                 </div>
                 <div className={s.root_reg}>
-                    <form action="" className={s.root__form}>
-                        <input type="text" className={s.root__form_name} placeholder="Ваше имя" onChange={regHandler} onBlur={e => blurHandler(e)} name="name"/>
-                        {(nameDirty && nameError) && <div>{nameError}</div>}
-                        <input type="text" className={s.root__form_password} placeholder="Ваша фамилия" onChange={regHandler} onBlur={e => blurHandler(e)} name="firstname"/>
-                        {(firstnameDirty && firstnameError) && <div>{firstnameError}</div>}
-                        <input type="email" className={s.root__form_email} placeholder="Ваш E-mail" onChange={regHandler} onBlur={e => blurHandler(e)} name="email"/>
-                        {(emailDirty && emailError) && <div>{emailError}</div>}
-                        <input type="tel" className={s.root__form_phone} placeholder="+7 (999) 999-99-99" maxLength="18" onChange={regHandler} onBlur={e => blurHandler(e)} name="phone"/>
-                        {(phoneDirty && phoneError) && <div>{phoneError}</div>}
-                        <div>{regError}</div>
-                        <p className={s.root__btn_submit}>Зарегестрироваться</p>
-                    </form>
+                        <p className={s.root__btn_submit}>Оплатить</p>
                 </div>
             </div>
         </div>

@@ -2,10 +2,11 @@ import React, {useContext, useEffect, useState} from 'react';
 import s from './Catalog.module.sass'
 import {Context} from "../../../index";
 import Calendar from "../../Calendar/Calendar";
+import {create} from "../../../http/orderApi";
 
 
 const Catalog =  React.forwardRef((props, forwardRef) => {
-    const {item} = useContext(Context)
+    const {item, cart, user} = useContext(Context)
 
     let rooms = item.items.map(function(current) {
         let rooms = Object.assign({}, current);
@@ -53,8 +54,23 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
         let sDate = startDate ? startDate.toLocaleDateString('ru-RU') : ''
         let eDate = endDate ? endDate.toLocaleDateString('ru-RU') : ''
         setRangeDate(`ОТ ${sDate} ДО ${eDate}`)
+
+        // console.log(startDate.toISOString())
     }, [startDate, endDate])
 
+    const addItemToCart = (item) => {
+        // let sDate = startDate ? startDate.toLocaleDateString('ru-RU') : ''
+        // let eDate = endDate ? endDate.toLocaleDateString('ru-RU') : ''
+        // let newItemInCart = {
+        //     id: item,
+        //     startDate: sDate,
+        //     endDate: eDate
+        // }
+        let data = create(startDate.toISOString(), endDate === null ? new Date(0) : endDate.toISOString(), user.user.id, item)
+        cart.addToCart(data)
+        console.log(item, user.user.id, startDate.toISOString(), endDate === null ? new Date(0).toISOString() : endDate.toISOString())
+        console.log(cart.getCart())
+    }
 
     // const searchRoom = () => {
     //     let people = peopleCount + kidCount
@@ -91,7 +107,6 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
                         <div className={activeDate ? `${s.root__select_content} ${s.active_date}` : `${s.root__select_content}`}>
                             <Calendar startDate={startDate} endDate={endDate} onChange={onChange}/>
                         </div>
-
                     </div>
                     <div className={s.root__select_container}>
                         <div className={s.root__select_div} onClick={() => setActivePeople(!activePeople)}>
@@ -151,7 +166,7 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
                         </div>
                         <div className={s.root__cart_content}>
                             <p>{item.descriprion}</p>
-                            <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg onClick={() => addItemToCart(item.id)} width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M31 32.5C31.8284 32.5 32.5 31.8284 32.5 31L32.5 17.5C32.5 16.6716 31.8284 16 31 16C30.1716 16 29.5 16.6716 29.5 17.5L29.5 29.5L17.5 29.5C16.6716 29.5 16 30.1716 16 31C16 31.8284 16.6716 32.5 17.5 32.5L31 32.5ZM0.93934 3.06066L29.9393 32.0607L32.0607 29.9393L3.06066 0.93934L0.93934 3.06066Z"/>
                                 <defs>
                                     <linearGradient id="paint0_linear_23_96" x1="16.5" y1="16.5" x2="7.65724e-06" y2="9.99998" gradientUnits="userSpaceOnUse">

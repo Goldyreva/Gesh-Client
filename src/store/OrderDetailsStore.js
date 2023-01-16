@@ -8,18 +8,20 @@ export default class OrderDetailsStore {
         this._orders = []
         makeAutoObservable(this)
     }
+
     setActive (bool) {
         this._active = bool
+    }
+    setId (id) {
+        this._id = id
+    }
+    setOrders(orders) {
+        this._orders = orders
     }
 
     get isActive () {
         return this._active
     }
-
-    setId (id) {
-        this._id = id
-    }
-
     get isId () {
         return this._id
     }

@@ -19,14 +19,6 @@ const Account = observer(() => {
     const [nameError, setNameError] = useState("Имя не может быть пустым")
     const [phoneError, setPhoneError] = useState("Телефон не может быть пустым")
     const [regError, setRegError] = useState("")
-    const [userOrders, setUserOrders] = useState({})
-    const orderInfo = [
-        {
-            id: 1,
-            number: '9384HO90',
-            status: 'pay'
-        }
-    ]
     const [inputField, setInputField] = useState({})
     const [constField, setConstField] = useState({
         name: '',
@@ -36,65 +28,67 @@ const Account = observer(() => {
     })
 
     useEffect(() => {
-        userInfo(user.user.id).then(data =>{setInputField(data)})
+        userInfo(user.user.id).then(data => {
+            setInputField(data)
+        })
     }, [])
 
     const inputsHandler = (e) => {
-        if(e.target.name !== 'phone'){
-            setInputField( regField => ({...regField, [e.target.name]: e.target.value}))
+        if (e.target.name !== 'phone') {
+            setInputField(regField => ({...regField, [e.target.name]: e.target.value}))
         }
         const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         // const tel = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/
-        if(e.target.name === 'email' && !re.test(String(e.target.value).toLowerCase())){
+        if (e.target.name === 'email' && !re.test(String(e.target.value).toLowerCase())) {
             setEmailError('Некорректный E-mail')
-        }else{
+        } else {
             setEmailError('')
         }
-        if(e.target.name === 'name' && e.target.value.length < 2){
+        if (e.target.name === 'name' && e.target.value.length < 2) {
             setNameError('Некорректное имя')
-        }else{
+        } else {
             setNameError('')
         }
-        if(e.target.name === 'password' && e.target.value.length < 8 && e.target.value.length > 0){
+        if (e.target.name === 'password' && e.target.value.length < 8 && e.target.value.length > 0) {
             setPasswordError('Пароль не может быть меньше 8 символов')
-        }else{
+        } else {
             setPasswordError('')
         }
-        if(e.target.name === 'phone'){
+        if (e.target.name === 'phone') {
             e.target.value = e.target.value.replace(/\D/g, "")
-            let inputValue =""
-            if(["7", "8", "9"].indexOf(e.target.value[0]) > -1){
-                if(e.target.value[0] === "9"){
+            let inputValue = ""
+            if (["7", "8", "9"].indexOf(e.target.value[0]) > -1) {
+                if (e.target.value[0] === "9") {
                     e.target.value = "7" + e.target.value
                 }
                 let firstSymbols = (e.target.value[0] === "8") ? "8" : "+7"
                 inputValue = firstSymbols + " "
-                if(e.target.value.length > 1){
+                if (e.target.value.length > 1) {
                     inputValue += "(" + e.target.value.substring(1, 4)
 
                 }
-                if(e.target.value.length >= 5){
+                if (e.target.value.length >= 5) {
                     inputValue += ") " + e.target.value.substring(4, 7)
                 }
-                if(e.target.value.length >= 8){
+                if (e.target.value.length >= 8) {
                     inputValue += "-" + e.target.value.substring(7, 9)
                 }
-                if(e.target.value.length >= 10){
+                if (e.target.value.length >= 10) {
                     inputValue += "-" + e.target.value.substring(9, 11)
                 }
-            }else{
+            } else {
                 inputValue = "+" + e.target.value
             }
             e.target.value = inputValue
             console.log(e.target.value)
             console.log(e.target.value.length)
-            setInputField( inputField => ({...inputField, [e.target.name]: e.target.value}))
+            setInputField(inputField => ({...inputField, [e.target.name]: e.target.value}))
             setPhoneError('')
         }
         // setInputField(inputField => ({...inputField, [e.target.name]: e.target.value}))
     }
     const blurHandler = (e) => {
-        switch (e.target.name){
+        switch (e.target.name) {
             case 'email':
                 setEmailDirty(true)
                 break
@@ -157,40 +151,49 @@ const Account = observer(() => {
                                 <div className={s.root__input_cont}>
                                     <label htmlFor="">Ваше ФИО</label>
                                     {editActive
-                                        ? <input type="text" value={inputField.name} onChange={inputsHandler} onBlur={e => blurHandler(e)}
+                                        ? <input type="text" value={inputField.name} onChange={inputsHandler}
+                                                 onBlur={e => blurHandler(e)}
                                                  name="name"/>
                                         : <p>{inputField.name}</p>
                                     }
 
-                                </div>{(nameDirty && nameError) && <div>{nameError}</div>}
+                                </div>
+                                {(nameDirty && nameError) && <div>{nameError}</div>}
                                 <div className={s.root__input_cont}>
                                     <label htmlFor="">Ваш email</label>
                                     {editActive
-                                        ? <input type="email" value={inputField.email} onChange={inputsHandler} onBlur={e => blurHandler(e)}
+                                        ? <input type="email" value={inputField.email} onChange={inputsHandler}
+                                                 onBlur={e => blurHandler(e)}
                                                  name="email"/>
                                         : <p>{inputField.email}</p>
                                     }
 
-                                </div>{(emailDirty && emailError) && <div>{emailError}</div>}
+                                </div>
+                                {(emailDirty && emailError) && <div>{emailError}</div>}
                                 <div className={s.root__input_cont}>
                                     <label htmlFor="">Ваш телефон: </label>
                                     {editActive
-                                        ? <input type="tel" value={inputField.phone} onChange={inputsHandler} onBlur={e => blurHandler(e)}
+                                        ? <input type="tel" value={inputField.phone} onChange={inputsHandler}
+                                                 onBlur={e => blurHandler(e)}
                                                  name="phone"/>
                                         : <p>{inputField.phone}</p>
                                     }
 
-                                </div>{(phoneDirty && phoneError) && <div>{phoneError}</div>}
+                                </div>
+                                {(phoneDirty && phoneError) && <div>{phoneError}</div>}
                                 <div className={s.root__input_cont}>
                                     <label htmlFor="">Ваш пароль</label>
                                     {editActive
-                                        ? <input type="password" value={inputField.password} onChange={inputsHandler} onBlur={e => blurHandler(e)}
-                                                 name="password" placeholder="********" />
-                                        : <input type="password" value={inputField.password} disabled name="password" placeholder="********"/>
+                                        ? <input type="password" value={inputField.password} onChange={inputsHandler}
+                                                 onBlur={e => blurHandler(e)}
+                                                 name="password" placeholder="********"/>
+                                        : <input type="password" value={inputField.password} disabled name="password"
+                                                 placeholder="********"/>
 
                                     }
 
-                                </div>{(passwordDirty && passwordError) && <div>{passwordError}</div>}
+                                </div>
+                                {(passwordDirty && passwordError) && <div>{passwordError}</div>}
                                 <div>{regError}</div>
                                 <p className={editActive ? `${s.root__btn_submit}` : `${s.root__btn_submit} ${s.nonActive}`}
                                    onClick={submitButton}>Сохранить изменения</p>
@@ -204,33 +207,29 @@ const Account = observer(() => {
                             <h4>Ваши заказы</h4>
                         </div>
                         <div className={s.root__orders}>
-                            {
-                                orderDetails.orders.map(item =>
-                            <div className={s.root__order_content}>
-                                <div className={`${s.root__order_grid} ${s.grid_header}`}>
-                                    <div><span>Номер заказа</span></div>
-                                    <div><span>Статус</span></div>
-                                    <div><span>Подробности</span></div>
-                                    <div><span>QR-код</span></div>
+                            {orderDetails.orders.map(item =>
+                                item.status !== "Корзина" &&
+                                <div className={s.root__order_content} key={item.id}>
+                                    <div className={`${s.root__order_grid} ${s.grid_header}`}>
+                                        <div><span>Номер заказа</span></div>
+                                        <div><span>Статус</span></div>
+                                        <div><span>Подробности</span></div>
+                                        <div><span>QR-код</span></div>
+                                    </div>
+                                    <div className={s.root__order_grid}>
+                                        <div>{item.id}</div>
+                                        <div>{item.status}</div>
+                                        <div><a onClick={() => {
+                                            orderDetails.setActive(true)
+                                            orderDetails.setId(item.id)
+                                        }}>Перейти</a></div>
+                                        <div><a onClick={() => {
+                                            barcode.setActive(true)
+                                            barcode.setId(item.id)
+                                        }}>Открыть</a></div>
+                                    </div>
                                 </div>
-
-                                        <div className={s.root__order_grid}>
-                                            <div>{item.number}</div>
-                                            <div>{item.status}</div>
-                                            <div><a onClick={() => {
-                                                orderDetails.setActive(true)
-                                                orderDetails.setId(item.id)
-                                            }}>Перейти</a></div>
-                                            <div><a onClick={() => {
-                                                barcode.setActive(true)
-                                                barcode.setId(item.id)
-                                            }}>Открыть</a></div>
-                                        </div>
-
-
-                            </div>
-                                )
-                            }
+                            )}
                         </div>
                     </div>
                 </div>
