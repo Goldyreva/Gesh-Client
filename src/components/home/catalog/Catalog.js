@@ -30,6 +30,7 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
+    const [countDay, setCountDay] = useState(0)
     const [rangeDate, setRangeDate] = useState('')
     const [changeDate, setChangeDate] = useState(false)
 
@@ -55,21 +56,14 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
         let eDate = endDate ? endDate.toLocaleDateString('ru-RU') : ''
         setRangeDate(`ОТ ${sDate} ДО ${eDate}`)
 
-        // console.log(startDate.toISOString())
+        let count = Math.ceil((endDate - startDate) / 1000 / 60 / 60 / 24)
+        if(count >= 0) {setCountDay(count)}
     }, [startDate, endDate])
 
     const addItemToCart = (item) => {
-        // let sDate = startDate ? startDate.toLocaleDateString('ru-RU') : ''
-        // let eDate = endDate ? endDate.toLocaleDateString('ru-RU') : ''
-        // let newItemInCart = {
-        //     id: item,
-        //     startDate: sDate,
-        //     endDate: eDate
-        // }
-        let data = create(startDate.toISOString(), endDate === null ? new Date(0) : endDate.toISOString(), user.user.id, item)
-        cart.addToCart(data)
+        create(startDate.toISOString(), endDate === null ? new Date(0) : endDate.toISOString(), countDay, user.user.id, item)
+            .then(data => cart.addToCart(data))
         console.log(item, user.user.id, startDate.toISOString(), endDate === null ? new Date(0).toISOString() : endDate.toISOString())
-        console.log(cart.getCart())
     }
 
     // const searchRoom = () => {

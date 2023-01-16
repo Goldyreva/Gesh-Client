@@ -1,4 +1,5 @@
 import {makeAutoObservable} from "mobx";
+import ItemStore from "./ItemStore";
 
 export default class CartStore {
 
@@ -18,8 +19,17 @@ export default class CartStore {
     get isActive () {
         return this._active
     }
-    get getCart (){
+    get getCart () {
         return this._cart
     }
+    getCost = () => {
+        let items = new ItemStore().items
+        let cost = 0
 
+        this._cart.map(i => {
+            cost += items.find(item => item.id === i.itemId).price * i.count_day
+        })
+
+        return cost
+    }
 }
