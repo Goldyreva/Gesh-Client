@@ -1,11 +1,12 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import s from './Catalog.module.sass'
 import {Context} from "../../../index";
 import Calendar from "../../Calendar/Calendar";
+import {create} from "../../../http/orderApi";
 
 
-const Catalog = React.forwardRef((props, forwardRef) => {
-    const {item} = useContext(Context)
+const Catalog =  React.forwardRef((props, forwardRef) => {
+    const {item, cart, user} = useContext(Context)
 
     const rooms = item.items.map(function (current) {
         let rooms = Object.assign({}, current);
@@ -29,6 +30,7 @@ const Catalog = React.forwardRef((props, forwardRef) => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
+    const [countDay, setCountDay] = useState(0)
     const [rangeDate, setRangeDate] = useState('')
     const [changeDate, setChangeDate] = useState(false)
 
@@ -53,7 +55,16 @@ const Catalog = React.forwardRef((props, forwardRef) => {
         let sDate = startDate ? startDate.toLocaleDateString('ru-RU') : ''
         let eDate = endDate ? endDate.toLocaleDateString('ru-RU') : ''
         setRangeDate(`ОТ ${sDate} ДО ${eDate}`)
+
+        let count = Math.ceil((endDate - startDate) / 1000 / 60 / 60 / 24)
+        if(count >= 0) {setCountDay(count)}
     }, [startDate, endDate])
+
+    const addItemToCart = (item) => {
+        create(startDate.toISOString(), endDate === null ? new Date(0) : endDate.toISOString(), countDay, user.user.id, item)
+            .then(data => cart.addToCart(data))
+        console.log(item, user.user.id, startDate.toISOString(), endDate === null ? new Date(0).toISOString() : endDate.toISOString())
+    }
 
     const sortedCountTypeRooms = useMemo(() => {
         let sortedCountRooms = rooms.filter(room => room.count_people >= (peopleCount + kidCount))
@@ -63,7 +74,6 @@ const Catalog = React.forwardRef((props, forwardRef) => {
         return sortedCountRooms
     }, [peopleCount, kidCount, activeType])
 
-    // searchRoom(peopleCount, kidCount)
     return (
         <div className={s.root} id="catalog" ref={forwardRef}>
             <div className={s.root__header}>
@@ -85,7 +95,6 @@ const Catalog = React.forwardRef((props, forwardRef) => {
                             className={activeDate ? `${s.root__select_content} ${s.active_date}` : `${s.root__select_content}`}>
                             <Calendar startDate={startDate} endDate={endDate} onChange={onChange}/>
                         </div>
-
                     </div>
                     <div className={s.root__select_container}>
                         <div className={s.root__select_div} onClick={() => setActivePeople(!activePeople)}>
@@ -159,7 +168,7 @@ const Catalog = React.forwardRef((props, forwardRef) => {
                             </div>
                             <div className={s.root__cart_content}>
                                 <p>{item.descriprion}</p>
-                                <svg width="33" height="33" viewBox="0 0 33 33" fill="none"
+                                <svg onClick={() => addItemToCart(item.id)} width="33" height="33" viewBox="0 0 33 33" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M31 32.5C31.8284 32.5 32.5 31.8284 32.5 31L32.5 17.5C32.5 16.6716 31.8284 16 31 16C30.1716 16 29.5 16.6716 29.5 17.5L29.5 29.5L17.5 29.5C16.6716 29.5 16 30.1716 16 31C16 31.8284 16.6716 32.5 17.5 32.5L31 32.5ZM0.93934 3.06066L29.9393 32.0607L32.0607 29.9393L3.06066 0.93934L0.93934 3.06066Z"/>

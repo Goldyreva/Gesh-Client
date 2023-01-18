@@ -1,0 +1,42 @@
+.root
+  width: 50%
+  position: relative
+  transition: all 0.2s linear
+  cursor: pointer
+
+  &__select_div
+    //width: 100%
+    //height: 100%
+    background-color: #1F1F1F !important
+    display: flex
+    justify-content: space-between
+    align-items: center
+    border-radius: 1vw
+    padding: 0vw 1.4vw
+    color: rgba(249, 249, 249, 0.37)
+    font-size: 1.2vw
+    font-family: 'Open Sans', sans-seri
+
+  &__select_div svg
+    fill: white
+
+  &__select_container:hover &__select_div svg
+    transition: all 0.2s linear
+    fill: #FF8A36
+
+  &__select_content
+    background-color: transparent
+    position: absolute
+    width: 100%
+    height: 0px
+    margin-top: 5px
+    border-radius: 1vw
+    overflow: hidden
+    transition: all 0.2s linear
+    z-index: 1000
+
+.active_date
+  height: 260px
+  background-color: transparent
+
+

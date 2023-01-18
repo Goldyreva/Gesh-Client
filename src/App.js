@@ -12,15 +12,20 @@ import Barcode from "./components/barcode/Barcode";
 import {observer} from "mobx-react-lite";
 import {Context} from "./index";
 import {check} from "./http/userApi";
+import {getForUser} from "./http/orderApi";
 
 const App = observer(() => {
-    const {user} = useContext(Context)
+    const {user, cart, orderDetails} = useContext(Context)
     const [loading, setLoading] = useState(true)
     useEffect(()=>{
         check().then(data => {
             console.log(data)
             user.setUser(data)
             user.setIsAuth(true)
+            getForUser(user.user.id).then(data => {
+                orderDetails.setOrders(data)
+                data.map(i => {i.status === "Корзина" && cart.addToCart(i)})
+            })
         }).finally(() => setLoading(false))
     }, [])
     if (loading){
