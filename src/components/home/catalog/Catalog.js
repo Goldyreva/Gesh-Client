@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import s from './Catalog.module.sass'
 import {Context} from "../../../index";
 import Calendar from "../../Calendar/Calendar";
