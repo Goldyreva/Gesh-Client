@@ -1,17 +1,23 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import s from "./Cart.module.sass";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
-import {login, registration} from "../../http/userApi";
 import CalendarDropdown from "../calendarDropdown/CalendarDropdown";
+import {update} from "../../http/orderApi";
 
 const Cart = observer(() => {
     let {cart, item, orderDetails, user} = useContext(Context)
-    let allData = []
 
     const addAllData = (item) => {
-        //изменение заказа на дату
-        console.log(item)
+        let order = cart.getCart.find(o => o.id === item.id)
+        order.start_date = item.startDate
+        order.end_date = item.endDate
+        order.count_day = item.countDay
+        update(order.id, order.start_date, order.end_date, order.count_day, order.status)
+    }
+
+    const pay = () => {
+        console.log('Pay')
     }
 
     return(
@@ -36,8 +42,8 @@ const Cart = observer(() => {
                     <h4>ИТОГО: {cart.getCost()} руб.</h4>
 
                 </div>
-                <div className={s.root_reg}>
-                        <p className={s.root__btn_submit}>Оплатить</p>
+                <div className={s.root_reg} onClick={() => pay()}>
+                    <p className={s.root__btn_submit}>Оплатить</p>
                 </div>
             </div>
         </div>
