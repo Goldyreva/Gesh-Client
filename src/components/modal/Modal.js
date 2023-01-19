@@ -71,8 +71,6 @@ const Modal = observer(() => {
                 inputValue = "+" + e.target.value
             }
             e.target.value = inputValue
-            console.log(e.target.value)
-            console.log(e.target.value.length)
             setRegField( regField => ({...regField, [e.target.name]: e.target.value}))
             setPhoneError('')
         }
@@ -139,14 +137,14 @@ const Modal = observer(() => {
                     <h3>Для входа  на сайт пройдите регистрацию ниже</h3>
                     <form action="" className={s.root__form}>
                         <input type="text" className={s.root__form_name} placeholder="Ваше имя" onChange={regHandler} onBlur={e => blurHandler(e)} name="name"/>
-                        {(nameDirty && nameError) && <div>{nameError}</div>}
+                        {(nameDirty && nameError) && <div className={s.root__error}>{nameError}</div>}
                         <input type="email" className={s.root__form_email} placeholder="Ваш E-mail" onChange={regHandler} onBlur={e => blurHandler(e)} name="email"/>
-                        {(emailDirty && emailError) && <div>{emailError}</div>}
+                        {(emailDirty && emailError) && <div className={s.root__error}>{emailError}</div>}
                         <input type="tel" className={s.root__form_phone} placeholder="+7 (999) 999-99-99" maxLength="18" onChange={regHandler} onBlur={e => blurHandler(e)} name="phone"/>
-                        {(phoneDirty && phoneError) && <div>{phoneError}</div>}
+                        {(phoneDirty && phoneError) && <div className={s.root__error}>{phoneError}</div>}
                         <input type="password" className={s.root__form_password} placeholder="Ваш пароль" onChange={regHandler} onBlur={e => blurHandler(e)} name="password"/>
-                        {(passwordDirty && passwordError) && <div>{passwordError}</div>}
-                        <div>{regError}</div>
+                        {(passwordDirty && passwordError) && <div className={s.root__error}>{passwordError}</div>}
+                        <div className={s.root__error}>{regError}</div>
                         <p onClick={regAuth} className={s.root__btn_submit}>Зарегестрироваться</p>
                     </form>
                 </div>
@@ -155,7 +153,7 @@ const Modal = observer(() => {
                     <form action="" className={s.root__form}>
                         <input type="email" className={s.root__form_email} placeholder="Ваш E-mail" onChange={authHandler} name="email"/>
                         <input type="password" className={s.root__form_password} placeholder="Ваш пароль" onChange={authHandler} name="password"/>
-                        <div>{authError}</div>
+                        <div className={s.root__error}>{authError}</div>
                         <p onClick={regAuth} className={s.root__btn_submit}>Войти</p>
                     </form>
                 </div>

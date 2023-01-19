@@ -1,0 +1,81 @@
+.root
+    width: 100vw
+    height: 100vh
+    background: rgba(0, 0, 0, 0.4)
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 101
+    display: flex
+    justify-content: center
+    align-items: center
+    opacity: 0
+    pointer-events: none
+    transition: 0.2s all linear
+    h3
+        color: white
+        font-family: 'Manrope', sans-serif
+        text-align: center
+        font-size: 20px
+        font-weight: 800
+    &__modal_content
+        background-image: url("../../../img/popUpBg.jpg")
+        background-size: cover
+        background-position: center top
+        padding: 20px
+        width: 500px
+        //min-height: 200px
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        align-items: center
+        border-radius: 16px
+    &__header
+        //align-self: flex-end !important
+        width: 90%
+        display: flex
+        justify-content: center
+        align-items: center
+        display: flex
+        justify-content: space-between
+        align-items: flex-start
+        margin-bottom: 15px
+    &__header_img
+        width: 15px
+    &__header svg
+        height: 15px
+    &__header_close
+        cursor: pointer
+    &__header_close:hover path
+        fill: #FF8A36
+        transition: all 0.2s linear
+
+
+    &__info_cont
+        width: 100%
+    &__btn_submit
+        color: white
+        background-color: #FF8A36
+        border: none
+        outline: none
+        box-shadow: none
+        border-radius: 16px
+        padding: 2%
+        width: 70%
+        font-family: 'Manrope', sans-serif
+        font-size: 18px
+        text-transform: uppercase
+        cursor: pointer
+        transition: all 0.2s linear
+        margin: 10px auto
+        text-align: center
+    &__btn_submit:hover
+        background-color: #ff9345
+    &__btn_submit:active
+        background-color: #e87117 !important
+
+
+
+.active
+    opacity: 1
+    pointer-events: all

@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import s from './Menu.module.sass';
 import {NavLink} from "react-router-dom";
-import {ACCOUNT_ROUTE, HOME_ROUTE} from "../../utils/consts";
+import {ACCOUNT_ROUTE, ADMIN_ROUTE, HOME_ROUTE} from "../../utils/consts";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 
@@ -12,6 +12,8 @@ const Menu = observer(() => {
         menu.setActive(false)
         modal.setActive(true)
     }
+
+    console.log(user.user.role)
     return (
         <div className={menu.isActive ? `${s.root} ${s.active}` : `${s.root}`}>
             <div className={menu.isActive ? `${s.root__menu_cont} ${s.active}` : `${s.root__menu_cont}`}>
@@ -19,7 +21,9 @@ const Menu = observer(() => {
                 <ul>
                     <li>
                         {user.isAuth
-                            ? <NavLink to={`${ACCOUNT_ROUTE}/${user.user.id}`} onClick={() => menu.setActive(false)}>Личный кабинет</NavLink>
+                            ? user.user.role === "ADMIN"
+                                ? <NavLink to={ADMIN_ROUTE} onClick={() => menu.setActive(false)}>Админ панель</NavLink>
+                                : <NavLink to={`${ACCOUNT_ROUTE}/${user.user.id}`} onClick={() => menu.setActive(false)}>Личный кабинет</NavLink>
                             : <a onClick={popUpLink}>Личный кабинет</a>
                         }
                     </li>

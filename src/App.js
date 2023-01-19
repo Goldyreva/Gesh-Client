@@ -12,17 +12,23 @@ import Barcode from "./components/barcode/Barcode";
 import {observer} from "mobx-react-lite";
 import {Context} from "./index";
 import {check} from "./http/userApi";
+import {getAll} from "./http/typeApi";
 
 const App = observer(() => {
-    const {user} = useContext(Context)
+    const {user, item} = useContext(Context)
     const [loading, setLoading] = useState(true)
     useEffect(()=>{
         check().then(data => {
-            console.log(data)
+            // console.log(data)
             user.setUser(data)
             user.setIsAuth(true)
         }).finally(() => setLoading(false))
+        getAll().then(data => {
+            item.setTypes(data.data)
+        })
+
     }, [])
+
     if (loading){
         return <h2>Загрузка...</h2>
     }
