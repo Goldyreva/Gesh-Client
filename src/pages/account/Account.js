@@ -157,8 +157,7 @@ const Account = observer(() => {
                                         : <p>{inputField.name}</p>
                                     }
 
-                                </div>
-                                {(nameDirty && nameError) && <div>{nameError}</div>}
+                                </div>{(nameDirty && nameError) && <div className={s.root__error}>{nameError}</div>}
                                 <div className={s.root__input_cont}>
                                     <label htmlFor="">Ваш email</label>
                                     {editActive
@@ -168,8 +167,7 @@ const Account = observer(() => {
                                         : <p>{inputField.email}</p>
                                     }
 
-                                </div>
-                                {(emailDirty && emailError) && <div>{emailError}</div>}
+                                </div>{(emailDirty && emailError) && <div className={s.root__error}>{emailError}</div>}
                                 <div className={s.root__input_cont}>
                                     <label htmlFor="">Ваш телефон: </label>
                                     {editActive
@@ -179,8 +177,7 @@ const Account = observer(() => {
                                         : <p>{inputField.phone}</p>
                                     }
 
-                                </div>
-                                {(phoneDirty && phoneError) && <div>{phoneError}</div>}
+                                </div>{(phoneDirty && phoneError) && <div className={s.root__error}>{phoneError}</div>}
                                 <div className={s.root__input_cont}>
                                     <label htmlFor="">Ваш пароль</label>
                                     {editActive
@@ -192,8 +189,7 @@ const Account = observer(() => {
 
                                     }
 
-                                </div>
-                                {(passwordDirty && passwordError) && <div>{passwordError}</div>}
+                                </div>{(passwordDirty && passwordError) && <div className={s.root__error}>{passwordError}</div>}
                                 <div>{regError}</div>
                                 <p className={editActive ? `${s.root__btn_submit}` : `${s.root__btn_submit} ${s.nonActive}`}
                                    onClick={submitButton}>Сохранить изменения</p>

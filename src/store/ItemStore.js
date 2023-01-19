@@ -2,17 +2,8 @@ import {makeAutoObservable} from "mobx";
 
 export default class ItemStore{
     constructor() {
-        this._types = [
-            {id: 1, name: "Семейный номер"},
-            {id: 2, name: "Гостевой номер"},
-            {id: 3, name: "Номер для пары"}
-        ]
-        this._items = [
-            {id: 1, name: 'Семейный номер', descriprion: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ', price: 6000, img: 'ededc506-0d11-4063-af2e-44cee8420c38.jpg', count_people: 6, typeId: 1 },
-            {id: 2, name: 'Гостевой номер', descriprion: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ', price: 5000, img: 'ededc506-0d11-4063-af2e-44cee8420c38.jpg', count_people: 3, typeId: 2 },
-            {id: 3, name: 'Номер для пары', descriprion: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ', price: 4000, img: 'ededc506-0d11-4063-af2e-44cee8420c38.jpg', count_people: 2, typeId: 3 },
-            {id: 4, name: 'Семейный номер', descriprion: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ', price: 10000, img: 'PHOTO-2022-08-15-09-08-52 1.jpg', count_people: 8, typeId: 1 }
-        ]
+        this._types = []
+        this._items = []
         makeAutoObservable(this)
     }
     setTypes(types){
@@ -20,6 +11,9 @@ export default class ItemStore{
     }
     setIsItem(items){
         this._items = items
+    }
+    addType(type){
+        this._types.push(type)
     }
 
     get types(){

@@ -9,7 +9,7 @@ import CartStore from "./store/CartStore";
 import MenuStore from "./store/MenuStore";
 import OrderDetailsStore from "./store/OrderDetailsStore";
 import BarcodeStore from "./store/BarcodeStore";
-
+import AdminStore from "./store/AdminStore";
 
 export const Context = createContext(null);
 
@@ -22,7 +22,8 @@ root.render(
         orderDetails: new OrderDetailsStore(),
         barcode: new BarcodeStore(),
         cart: new CartStore(),
-        menu: new MenuStore()
+        menu: new MenuStore(),
+        admin: new AdminStore(),
     }}>
         <App />
     </Context.Provider>,

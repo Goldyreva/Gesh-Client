@@ -1,0 +1,39 @@
+.root
+  width: 100%
+  &__table
+    width: 100%
+  &__header
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr 3fr 1fr 1fr 1fr
+    text-align: center
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15)
+  &__add_form
+    display: flex
+    align-items: center
+    width: 400px
+    flex-wrap: wrap
+    width: 100%
+  &__add_input
+    font-size: 18px
+    width: 400px !important
+    margin: 5px !important
+  &__add_input:focus
+    border-bottom: 1px solid #ff8a36 !important
+    -webkit-box-shadow: 0 1px 0 0 #ff8a36 !important
+    box-shadow: 0 1px 0 0 #ff8a36 !important
+  &__add_btn
+    background: #ff8a36
+    padding: 3px 15px
+    border-radius: 16px
+    color: white
+    transition: all 0.2s linear
+    cursor: pointer
+    font-size: 18px
+  &__add_btn:hover
+    background: #ff9345
+  &__add_btn:active
+    background: #e87117
+  &__table p
+    padding: 5px
+
+

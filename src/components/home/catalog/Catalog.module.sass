@@ -205,10 +205,21 @@
   .root
     &__cart
       width: 48%
+    &__cart_header h5
+      font-size: 2vw
+    &__cart_content p
+      font-size: 1.8vw
 @media screen and (max-width: 680px)
   .root
     &__header
       flex-direction: column
+    &__cart_header h5
+      font-size: 2.8vw
+    &__cart_content p
+      font-size: 2.7vw
+      width: 100%
+      white-space: normal
+
     &__h2_cont
       align-self: flex-end
     &__h2_cont h2
@@ -228,6 +239,7 @@
     &__select_content
       z-index: 10
       margin-top: 0
+      white-space: normal
     &__select_content ul li
       color: white
       font-size: 2vw
@@ -243,12 +255,10 @@
       display: inline-block
       white-space: nowrap
       overflow-x: scroll
-      overflow-y: hidden
-      //height: 100px
     &__cart
       width: 60vw
       display: inline-block
-      white-space: nowrap
+
 
 .root
   &__par
