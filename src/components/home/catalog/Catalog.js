@@ -3,30 +3,14 @@ import s from './Catalog.module.sass'
 import {Context} from "../../../index";
 import Calendar from "../../Calendar/Calendar";
 import {create} from "../../../http/orderApi";
+import {getAll} from "../../../http/typeApi";
+import {getAll as getAllItem} from "../../../http/roomApi";
+import Carousel from "../../carousel/Carousel";
 
 
-const Catalog =  React.forwardRef((props, forwardRef) => {
+const Catalog = React.forwardRef((props, forwardRef) => {
     const {item, cart, user} = useContext(Context)
 
-    const rooms = item.items.map(function (current) {
-        let rooms = Object.assign({}, current);
-        rooms.key = current.id;
-        rooms.name = current.name;
-        rooms.descriprion = current.descriprion;
-        rooms.price = current.price;
-        rooms.img = current.img;
-        rooms.count_people = current.count_people;
-        rooms.typeId = current.typeId;
-        return rooms;
-    })
-
-    let type = item.types.map(function (current) {
-        let type = Object.assign({}, current);
-        type.key = current.id;
-        type.value = current.name;
-        type.label = current.name;
-        return type;
-    });
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
@@ -51,13 +35,16 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
         setChangeDate(true)
     };
 
+
     useEffect(() => {
         let sDate = startDate ? startDate.toLocaleDateString('ru-RU') : ''
         let eDate = endDate ? endDate.toLocaleDateString('ru-RU') : ''
         setRangeDate(`ОТ ${sDate} ДО ${eDate}`)
 
         let count = Math.ceil((endDate - startDate) / 1000 / 60 / 60 / 24)
-        if(count >= 0) {setCountDay(count)}
+        if (count >= 0) {
+            setCountDay(count)
+        }
     }, [startDate, endDate])
 
     const addItemToCart = (item) => {
@@ -67,7 +54,7 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
     }
 
     const sortedCountTypeRooms = useMemo(() => {
-        let sortedCountRooms = rooms.filter(room => room.count_people >= (peopleCount + kidCount))
+        let sortedCountRooms = item.items.filter(room => room.count_people >= (peopleCount + kidCount))
         if (activeType !== '') {
             return sortedCountRooms.filter(room => item.types.filter(i => i.id === room.typeId)[0].name.toUpperCase() === activeType)
         }
@@ -140,7 +127,7 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
                             <div className={s.root__room_type_cont}>
                                 <ul>
                                     <li key='base' onClick={() => setActiveType('')}>Без типа</li>
-                                    {type.map(item =>
+                                    {item.types.map(item =>
                                         <li key={item.id}
                                             onClick={() => setActiveType(item.name.toUpperCase())}>{item.name}</li>
                                     )}
@@ -158,17 +145,24 @@ const Catalog =  React.forwardRef((props, forwardRef) => {
             </div>
             <div className={s.root__cart_cont}>
                 {sortedCountTypeRooms.length === 0
-                    ? <p className={s.root__cart_null}>Номера не найдены!</p>
+                    ? <p className={s.root__cart_null}>Номера не найдены:(</p>
                     : sortedCountTypeRooms.map(item =>
                         <div className={s.root__cart} key={item.id}>
-                            <img src={`${process.env.REACT_APP_API_URL}${item.img}`} alt=""/>
+                            <div>
+                                <Carousel images={item.itemsImages}/>
+                                {/*{item.itemsImages.map(img =>*/}
+                                {/*    <img src={`${process.env.REACT_APP_API_URL}${img.link}`} key={img.id} alt=""/>*/}
+                                {/*)}*/}
+                            </div>
+
                             <div className={s.root__cart_header}>
                                 <h5>{item.name}</h5>
                                 <h5>{`ОТ ${item.price} РУБ/СУТКИ`}</h5>
                             </div>
                             <div className={s.root__cart_content}>
-                                <p>{item.descriprion}</p>
-                                <svg onClick={() => addItemToCart(item.id)} width="33" height="33" viewBox="0 0 33 33" fill="none"
+                                <p>{item.description}</p>
+                                <svg onClick={() => addItemToCart(item.id)} width="33" height="33" viewBox="0 0 33 33"
+                                     fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M31 32.5C31.8284 32.5 32.5 31.8284 32.5 31L32.5 17.5C32.5 16.6716 31.8284 16 31 16C30.1716 16 29.5 16.6716 29.5 17.5L29.5 29.5L17.5 29.5C16.6716 29.5 16 30.1716 16 31C16 31.8284 16.6716 32.5 17.5 32.5L31 32.5ZM0.93934 3.06066L29.9393 32.0607L32.0607 29.9393L3.06066 0.93934L0.93934 3.06066Z"/>

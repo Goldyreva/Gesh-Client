@@ -1,46 +1,41 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import s from "./Orders.module.sass";
 import {Context} from "../../../index";
+import {create, deleteOneType} from "../../../http/typeApi";
+import Order from "./order/Order";
+import {getAll} from "../../../http/orderApi";
 
 const Orders = observer( () => {
-    let {orderDetails, barcode, user} = useContext(Context)
+    let {orderDetails} = useContext(Context)
+    const [typeValue, setTypeValue] = useState()
+
+    const changeStatus = () => {
+
+    }
+
+    useEffect(() => {
+        getAll().then(data => {
+            orderDetails.setOrders(data)
+        })
+    })
     return (
         <div className={s.root}>
-            {user.user.role === "ADMIN"
-                ?
-
-                <div className={s.root__orders}>
-                    {
-                        orderDetails.orders.map(item =>
-                            <div className={s.root__order_content}>
-                                <div className={`${s.root__order_grid} ${s.grid_header}`}>
-                                    <div><span>Номер заказа</span></div>
-                                    <div><span>Статус</span></div>
-                                    <div><span>Подробности</span></div>
-                                    <div><span>QR-код</span></div>
-                                </div>
-
-                                <div className={s.root__order_grid}>
-                                    <div>{item.number}</div>
-                                    <div>{item.status}</div>
-                                    <div><a onClick={() => {
-                                        orderDetails.setActive(true)
-                                        orderDetails.setId(item.id)
-                                    }}>Перейти</a></div>
-                                    <div><a onClick={() => {
-                                        barcode.setActive(true)
-                                        barcode.setId(item.id)
-                                    }}>Открыть</a></div>
-                                </div>
-                            </div>
-                        )
-                    }
+            <h4>Список заказов</h4>
+            <div className={s.root__table}>
+                <div className={s.root__header}>
+                    <p><b>ID</b></p>
+                    <p><b>Дата</b></p>
+                    <p><b>Пользователь</b></p>
+                    <p><b>Номер</b></p>
+                    <p><b>Статус</b></p>
+                    <p><b>Изменить статус</b></p>
                 </div>
+                {orderDetails.orders.map(item =>
+                    <Order order={item} change={changeStatus}/>
+                )}
 
-                :
-                <p>Нет прав доступа</p>
-            }
+            </div>
         </div>
     );
 });

@@ -14,24 +14,45 @@ const Rooms = observer( () => {
         item.setIsItem(data)
     }
     const roomHandler = (e) =>{
-        setRoomValue( roomValue => ({...roomValue, [e.target.name]: e.target.value}))
+        if(e.target.name === 'files'){
+            const formData = new FormData()
+            // img.append('foto', e.target.files)
+            console.log(formData)
+            // setRoomValue( roomValue => ({...roomValue, [formData]))
+        }else{
+            setRoomValue( roomValue => ({...roomValue, [e.target.name]: e.target.value}))
+        }
+            console.log(roomValue)
     }
     const deleteType = async (id) => {
         let data = await deleteOneType(id)
         item.setIsItem(data)
     }
-
+    item.types.map(type => {console.log(type.name)}
+        // <option value={type.name} key={type.id}>{type.name}</option>
+    )
     return (
         <div className={s.root}>
             <h4>Добавить номер</h4>
             <div className={s.root__add_form}>
+
                 <input type="text" className={s.root__add_input} placeholder="Название" name="name" onChange={roomHandler}/>
-                <input type="number" className={s.root__add_input} placeholder="Стоимость" name="name" onChange={roomHandler}/>
-                <input type="number" className={s.root__add_input} placeholder="Количество людей" name="name" onChange={roomHandler}/>
-                <textarea className={s.root__add_input} placeholder="Описание" name="name" onChange={roomHandler}>
+                <input type="number" className={s.root__add_input} placeholder="Стоимость" name="coast" onChange={roomHandler}/>
+                <input type="number" className={s.root__add_input} placeholder="Количество людей" name="count" onChange={roomHandler}/>
+                <textarea className={s.root__add_input} placeholder="Описание" name="description" onChange={roomHandler}>
                 </textarea>
-                <input type="file" className={s.root__add_input} placeholder="Изображение" name="name" onChange={roomHandler}/>
-                <p onClick={() => addItem()} className={s.root__add_btn}>Сохранить</p>
+                <select name="type_select" id="" onChange={roomHandler}>>
+                    {
+                        item.types.map(type =>
+                            <option value={type.name} key={type.id}>{type.name}</option>
+                        )
+                    }
+                </select>
+                <form encType="multipart/form-data" action="" method="" id='formFile'>
+                    <input type="file" className={s.root__add_input} placeholder="Изображение" name="files" onChange={roomHandler}/>
+                </form>
+                    <p onClick={() => addItem()} className={s.root__add_btn}>Сохранить</p>
+
             </div>
             <h4>Список номеров</h4>
             <div className={s.root__table}>
@@ -45,7 +66,7 @@ const Rooms = observer( () => {
                     <p><b>Удалить</b></p>
                 </div>
                 {item.items.map(item =>
-                    <Room item={item} del={deleteType}/>
+                    <Room item={item} del={deleteType} />
                 )}
             </div>
         </div>

@@ -13,6 +13,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "./index";
 import {check} from "./http/userApi";
 import {getAll} from "./http/typeApi";
+import {getAll as getAllItem} from "./http/roomApi"
 import {getForUser} from "./http/orderApi";
 
 const App = observer(() => {
@@ -27,11 +28,15 @@ const App = observer(() => {
                 orderDetails.setOrders(data)
                 data.map(i => {i.status === "Корзина" && cart.addToCart(i)})
             })
-        }).finally(() => setLoading(false))
-        getAll().then(data => {
-            item.setTypes(data.data)
-        })
-
+            getAll().then(data => {
+                item.setTypes(data.data)
+                console.log(data.data)
+            })
+            getAllItem().then(data => {
+                item.setIsItem(data.data)
+                console.log(data.data)
+            })
+        }).finally(() => {setLoading(false)})
     }, [])
 
     if (loading){

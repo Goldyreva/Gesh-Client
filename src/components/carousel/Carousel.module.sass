@@ -1,0 +1,77 @@
+.root
+  display: flex
+  p
+    color: rgba(255, 255, 255, 0.7)
+    cursor: pointer
+    font-family: 'Manrope', sans-serif
+    font-size: 10vw
+    transition: all linear 0.2s
+    margin: 0 0 6px 0
+  &__arrow
+    background: rgba(0, 0, 0, 0.3)
+    width: 20%
+    height: 30%
+    display: flex
+    align-items: center
+    justify-content: center
+    transition: all linear 0.2s
+    cursor: pointer
+  &__arrow:hover
+    background: rgba(0, 0, 0, 0.6)
+  &__arrow:hover p
+    color: rgb(255, 255, 255)
+
+  //position: absolute
+  //p:first-child
+  //  left: 0
+  //  top: 50%
+  //p:last-child
+  //  right: 0
+  //  top: 50%
+  &__img_cont_mobile
+    display: none
+    width: 100%
+    height: 50vw
+    background-size: contain
+    background-repeat: no-repeat
+    background-position: center
+    justify-content: space-between
+    align-items: center
+  &__img_cont
+    width: 100%
+    height: 25vw
+    background-size: contain
+    background-position: center
+    display: flex
+    justify-content: space-between
+    background-repeat: no-repeat
+    align-items: stretch
+  &__slider_cont
+    //background: rgba(28, 28, 28, 0.26)
+    //border: 2px solid white
+    width: 100%
+    display: flex
+    flex-direction: column
+    justify-content: flex-end
+    align-items: center
+    &__line
+      width: 50%
+      height: 2px
+      background: rgba(255, 255, 255, 0.5)
+      margin-bottom: 10px
+    &__line_white
+      width: 50%
+      height: 2px
+      background: rgb(255, 255, 255)
+      margin-bottom: 10px
+
+@media screen and (max-width: 830px)
+  .root
+    &__img_cont
+      height: 38vw
+@media screen and (max-width: 680px)
+  .root
+    &__img_cont
+      display: none
+    &__img_cont_mobile
+      display: flex

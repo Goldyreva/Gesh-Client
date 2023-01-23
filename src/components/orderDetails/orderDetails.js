@@ -15,6 +15,7 @@ const OrderDetails = observer(() => {
             }
         })
     }, [orderDetails.isId])
+
     useEffect(() => {
         item.items.forEach((item) => {
             if(item.id === thisOrder.itemId){
