@@ -22,14 +22,4 @@ export default class CartStore {
     get getCart () {
         return this._cart
     }
-    getCost = () => {
-        let items = new ItemStore().items
-        let cost = 0
-
-        this._cart.map(i => {
-            cost += items.find(item => item.id === i.itemId).price * i.count_day
-        })
-
-        return cost
-    }
 }

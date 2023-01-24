@@ -8,12 +8,27 @@ import {update} from "../../http/orderApi";
 const Cart = observer(() => {
     let {cart, item, orderDetails, user} = useContext(Context)
 
+    const [cost, setCost] = useState(0)
+
+    const updateCost = () => {
+        let c = 0
+        cart.getCart.map(i => {
+            c += item.items.find(item => item.id === i.itemId).price * i.count_day
+        })
+        setCost(c)
+    }
+
+    useEffect(() => {
+        updateCost()
+    }, [])
+
     const addAllData = (item) => {
         let order = cart.getCart.find(o => o.id === item.id)
         order.start_date = item.startDate
         order.end_date = item.endDate
         order.count_day = item.countDay
         update(order.id, order.start_date, order.end_date, order.count_day, order.status)
+        updateCost()
     }
 
     const pay = () => {
@@ -21,7 +36,6 @@ const Cart = observer(() => {
     }
 
     return(
-
         <div className={cart.isActive ? `${s.root} ${s.active}` : `${s.root}`} onClick={() => cart.setActive(false)}>
             <div className={s.root__modal_content} onClick={e =>e.stopPropagation()}>
                 <div className={s.root__header}>
@@ -39,8 +53,7 @@ const Cart = observer(() => {
                         <CalendarDropdown id={i.id} data={i} add={addAllData}/>
                     </div>
                     )}
-                    <h4>ИТОГО: {cart.getCost()} руб.</h4>
-
+                    <h4>ИТОГО: {cost} руб.</h4>
                 </div>
                 <div className={s.root_reg} onClick={() => pay()}>
                     <p className={s.root__btn_submit}>Оплатить</p>

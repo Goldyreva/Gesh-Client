@@ -6,11 +6,11 @@ import {create} from "../../../http/orderApi";
 import {getAll} from "../../../http/typeApi";
 import {getAll as getAllItem} from "../../../http/roomApi";
 import Carousel from "../../carousel/Carousel";
+import {useSortedData} from "../../../hooks/useSort";
 
 
 const Catalog = React.forwardRef((props, forwardRef) => {
     const {item, cart, user} = useContext(Context)
-
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
@@ -28,13 +28,14 @@ const Catalog = React.forwardRef((props, forwardRef) => {
     const [activePeople, setActivePeople] = useState(false);
     const [activeDate, setActiveDate] = useState(false);
 
+    let list = useSortedData(item, kidCount+peopleCount, activeType)
+
     const onChange = (dates) => {
         const [start, end] = dates;
         setStartDate(start);
         setEndDate(end);
         setChangeDate(true)
     };
-
 
     useEffect(() => {
         let sDate = startDate ? startDate.toLocaleDateString('ru-RU') : ''
@@ -52,14 +53,6 @@ const Catalog = React.forwardRef((props, forwardRef) => {
             .then(data => cart.addToCart(data))
         console.log(item, user.user.id, startDate.toISOString(), endDate === null ? new Date(0).toISOString() : endDate.toISOString())
     }
-
-    const sortedCountTypeRooms = useMemo(() => {
-        let sortedCountRooms = item.items.filter(room => room.count_people >= (peopleCount + kidCount))
-        if (activeType !== '') {
-            return sortedCountRooms.filter(room => item.types.filter(i => i.id === room.typeId)[0].name.toUpperCase() === activeType)
-        }
-        return sortedCountRooms
-    }, [peopleCount, kidCount, activeType])
 
     return (
         <div className={s.root} id="catalog" ref={forwardRef}>
@@ -144,9 +137,9 @@ const Catalog = React.forwardRef((props, forwardRef) => {
                 </form>
             </div>
             <div className={s.root__cart_cont}>
-                {sortedCountTypeRooms.length === 0
+                {list.length === 0
                     ? <p className={s.root__cart_null}>Номера не найдены:(</p>
-                    : sortedCountTypeRooms.map(item =>
+                    : list.map(item =>
                         <div className={s.root__cart} key={item.id}>
                             <div>
                                 <Carousel images={item.itemsImages}/>
