@@ -28,9 +28,12 @@ const App = observer(() => {
                 orderDetails.setOrders(data)
                 data.map(i => {i.status === "Корзина" && cart.addToCart(i)})
             })
-            getAll().then(data => item.setTypes(data.data))
-            getAllItem().then(data => item.setIsItem(data.data)).finally(() => {setLoading(false)})
-        })
+        }).finally(() => {setLoading(false)})
+        setLoading(true)
+        getAll().then(data => item.setTypes(data.data))
+        getAllItem().then(data => {
+            item.setIsItem(data.data)
+        }).finally(() => {setLoading(false)})
     }, [])
 
     if (loading){

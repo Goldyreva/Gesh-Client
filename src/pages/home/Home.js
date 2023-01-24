@@ -8,10 +8,12 @@ import Tourist from "../../components/home/tourist/Tourist";
 import Map from "../../components/home/map/Map";
 import Footer from "../../components/footer/Footer";
 import {useParams} from "react-router-dom";
+import BottomMenu from "../../components/bottomMenu/BottomMenu";
 
 const Home = () => {
     let params = useParams()
     const blocks = {
+        banner: useRef(null),
         about: useRef(null),
         catalog: useRef(null),
         locate: useRef(null),
@@ -19,7 +21,9 @@ const Home = () => {
     }
     const executeScroll = (block = "") => {
         if (block in blocks) {
-            blocks[block].current.scrollIntoView();
+            block === 'banner'
+            ? blocks[block].current.scrollIntoView({block: "end", inline: "nearest"})
+            : blocks[block].current.scrollIntoView()
         }
     }
 
@@ -29,7 +33,7 @@ const Home = () => {
 
     return (
         <div className={s.root}>
-            <Banner/>
+            <Banner ref={blocks.banner}/>
             <div className={s.root__main}>
                 <About ref={blocks.about}/>
                 <Catalog ref={blocks.catalog}/>
@@ -37,6 +41,7 @@ const Home = () => {
                 <Tourist/>
                 <Map ref={blocks.map}/>
                 <Footer/>
+                <BottomMenu/>
             </div>
         </div>
     );

@@ -3,8 +3,10 @@ import s from "./Map.module.sass";
 import map from '../../../img/villageMap.jpg'
 import {create} from "../../../http/feedbackApi";
 import {set} from "mobx";
+import AddedConfirm from "../../addedConfirm/AddedConfirm";
 
 const Map = React.forwardRef((props, forwardRef) => {
+    const [confirmActive, setConfirmActive] = useState(false)
     const [feedbackField, setFeedbackField] = useState({
         phone: '',
         name: '',
@@ -76,11 +78,13 @@ const Map = React.forwardRef((props, forwardRef) => {
     const submitBtn = async (e) => {
         e.preventDefault()
         console.log(feedbackField)
-        create(feedbackField.phone, feedbackField.name, feedbackField.message)
+        let data = create(feedbackField.phone, feedbackField.name, feedbackField.message)
+            .then(data => setConfirmActive(true))
             .catch(e => setError(e.response.data.message))
-        // setError(data)
     }
-    return (<div className={s.root} id="map" ref={forwardRef}>
+    return (
+        <div className={s.root} id="map" ref={forwardRef}>
+            <AddedConfirm text={'Ваш запрос отправлен. С вами свяжутся в ближайшее время.'} active={confirmActive} setActive={setConfirmActive}/>
             <div className={s.root__header}>
                 <div className={s.root__h2_cont}><h2>КАРТА ПОСЕЛКА</h2></div>
             </div>
@@ -111,7 +115,8 @@ const Map = React.forwardRef((props, forwardRef) => {
                     <img src={map} alt="map"/>
                 </div>
             </div>
-        </div>);
+        </div>
+    );
 });
 
 export default Map;

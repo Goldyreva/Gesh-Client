@@ -12,7 +12,6 @@ const Carousel = ({images}) => {
     const nextSlide = () => {
         if(activeSlide < images.length - 1){
             setActiveSlide(activeSlide + 1)
-            // console.log(activeSlide)
         }else{
             setActiveSlide(0)
         }
@@ -20,17 +19,11 @@ const Carousel = ({images}) => {
     const lastSlide = () => {
         if(activeSlide > 0){
             setActiveSlide(activeSlide - 1)
-            console.log(activeSlide)
         }else{
             setActiveSlide(images.length - 1)
         }
     }
 
-
-
-    useEffect(() => {
-        console.log(activeSlide)
-    }, [activeSlide])
 
     return (
         <div className={s.root}>

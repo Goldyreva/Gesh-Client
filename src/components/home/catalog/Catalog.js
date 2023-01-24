@@ -5,6 +5,7 @@ import Calendar from "../../Calendar/Calendar";
 import {create} from "../../../http/orderApi";
 import Carousel from "../../carousel/Carousel";
 import {useSortedData} from "../../../hooks/useSort";
+import AddedConfirm from "../../addedConfirm/AddedConfirm";
 
 
 const Catalog = React.forwardRef((props, forwardRef) => {
@@ -21,6 +22,9 @@ const Catalog = React.forwardRef((props, forwardRef) => {
     const [changePeople, setChangePeople] = useState(false)
 
     const [activeType, setActiveType] = useState('')
+
+    const [confirmActive, setConfirmActive] = useState(false)
+    const [confirmRoom, setConfirmRoom] = useState("")
 
     const [active, setActive] = useState(false);
     const [activePeople, setActivePeople] = useState(false);
@@ -48,13 +52,15 @@ const Catalog = React.forwardRef((props, forwardRef) => {
 
     const addItemToCart = (item) => {
         create(startDate.toISOString(), endDate === null ? new Date(0) : endDate.toISOString(), countDay, user.user.id, item)
-            .then(data => cart.addToCart(data))
-        console.log(item, user.user.id, startDate.toISOString(), endDate === null ? new Date(0).toISOString() : endDate.toISOString())
-    }
+            .then(data => {cart.addToCart(data)
+                setConfirmActive(true)
+            })
+        }
 
     return (
-        <div className={s.root} id="catalog" ref={forwardRef}>
-            <div className={s.root__header}>
+    <div className={s.root} id="catalog" ref={forwardRef}>
+        <AddedConfirm text={`Объект "${confirmRoom}" добавлен в корзину`} active={confirmActive} setActive={setConfirmActive}/>
+        <div className={s.root__header}>
                 <div className={s.root__h2_cont}><h2>КАТАЛОГ ОБЬЕКТОВ</h2></div>
                 <h4>АРЕНДА ДОМОВ</h4>
             </div>
@@ -152,7 +158,9 @@ const Catalog = React.forwardRef((props, forwardRef) => {
                             </div>
                             <div className={s.root__cart_content}>
                                 <p>{item.description}</p>
-                                <svg onClick={() => addItemToCart(item.id)} width="33" height="33" viewBox="0 0 33 33"
+                                <svg onClick={() => {addItemToCart(item.id)
+                                    setConfirmRoom(item.name)
+                                }} width="33" height="33" viewBox="0 0 33 33"
                                      fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path

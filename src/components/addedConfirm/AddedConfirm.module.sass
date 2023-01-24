@@ -1,0 +1,46 @@
+.root
+  width: 100vw
+  height: 100vh
+  background: rgba(0, 0, 0, 0)
+  position: fixed
+  top: 0
+  right: 0
+  transform: translateX(320px)
+  transition: all 0.3s linear
+  z-index: 101
+  display: flex
+  flex-direction: row
+  justify-content: flex-end
+  align-items: flex-end
+  opacity: 0
+  pointer-events: none
+  &__header
+    display: flex
+    width: 100%
+    justify-content: flex-end
+  &__header svg
+    font-size: 30px
+    font-family: 'Manrope', sans-serif
+    cursor: pointer
+    margin: 0
+    width: 20px
+    height: 20px
+  &__main
+    height: 180px
+    width: 360px
+    margin-right: 20px
+    margin-bottom: 40px
+    //background: black
+    padding: 20px
+    background-image: url("../../img/popUpBg.jpg")
+    border-radius: 16px
+  &__main p
+    color: white
+    font-size: 18px
+    font-family: 'Open Sans', sans-serif
+
+.active
+  opacity: 1
+  transform: translateX(0)
+  pointer-events: all
+  right: 0
