@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Footer from "../../components/footer/Footer";
 import s from "./Admin.module.sass"
 import {observer} from "mobx-react-lite";
@@ -11,11 +11,17 @@ import {getAll} from "../../http/orderApi";
 
 const Admin = observer( () => {
     let {admin, orderDetails} = useContext(Context)
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         getAll().then(data => {
             orderDetails.setOrders(data)
-        })
+        }).finally(() => {setLoading(false)})
     }, [])
+
+    if (loading){
+        return <h2>Загрузка...</h2>
+    }
     return (
         <div className={s.root}>
             <div className={s.root__admin_cont}>
