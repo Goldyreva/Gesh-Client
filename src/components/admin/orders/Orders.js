@@ -1,24 +1,19 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {observer} from "mobx-react-lite";
 import s from "./Orders.module.sass";
 import {Context} from "../../../index";
-import {create, deleteOneType} from "../../../http/typeApi";
 import Order from "./order/Order";
-import {getAll} from "../../../http/orderApi";
+import {updateStatus} from "../../../http/orderApi";
 
 const Orders = observer( () => {
     let {orderDetails} = useContext(Context)
-    const [typeValue, setTypeValue] = useState()
 
-    const changeStatus = () => {
-
+    const changeStatus = async (id, status) => {
+        let data = updateStatus(id, status)
+        orderDetails.setStatus(id, status)
+        console.log(data)
     }
 
-    useEffect(() => {
-        getAll().then(data => {
-            orderDetails.setOrders(data)
-        })
-    })
     return (
         <div className={s.root}>
             <h4>Список заказов</h4>

@@ -30,11 +30,9 @@ const App = observer(() => {
             })
             getAll().then(data => {
                 item.setTypes(data.data)
-                console.log(data.data)
             })
             getAllItem().then(data => {
                 item.setIsItem(data.data)
-                console.log(data.data)
             })
         }).finally(() => {setLoading(false)})
     }, [])

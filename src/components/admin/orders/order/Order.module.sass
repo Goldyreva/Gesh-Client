@@ -1,5 +1,12 @@
 .root
   display: grid
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
+  grid-template-columns: 1fr 5fr 5fr 5fr 3fr 3fr
   text-align: center
   border-bottom: 1px solid rgba(0, 0, 0, 0.15)
+  &__delete_btn
+    cursor: pointer
+    transition: color 0.1s linear
+    font-weight: bold
+    color: #696969
+  &__delete_btn:hover
+    color: #ff8a36
