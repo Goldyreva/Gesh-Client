@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import s from "./Room.module.sass";
 import Confirm from "../../confirm/Confirm";
+import Carousel from "../../../carousel/Carousel";
 
 
 const Room = ({item, del}) => {
@@ -11,12 +12,13 @@ const Room = ({item, del}) => {
         title: `Удалить номер "${item.name}"?`,
         btn: 'Удалить'
     }
-
+    console.log(item)
     return (
         <div key={item.id} className={s.root}>
             <Confirm active={active} setActive={() => setActive(!active)} info={info} del={del}/>
             <p>{item.id}</p>
-            <img src={`${process.env.REACT_APP_API_URL}${item.img}`} alt=""/>
+            {/*<img src={`${process.env.REACT_APP_API_URL}${item.img}`} alt=""/>*/}
+            <Carousel images={item.itemsImages}/>
             <p>{item.name}</p>
             <p>{item.description}</p>
             <p>{item.price} руб/сутки</p>
