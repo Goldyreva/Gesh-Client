@@ -18,7 +18,7 @@ const Orders = observer( () => {
         getAll().then(data => {
             orderDetails.setOrders(data)
         })
-    })
+    }, [])
     return (
         <div className={s.root}>
             <h4>Список заказов</h4>

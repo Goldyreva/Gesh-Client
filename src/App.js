@@ -19,24 +19,18 @@ import {getForUser} from "./http/orderApi";
 const App = observer(() => {
     const {user, cart, orderDetails, item} = useContext(Context)
     const [loading, setLoading] = useState(true)
+
     useEffect(()=>{
         check().then(data => {
-            // console.log(data)
             user.setUser(data)
             user.setIsAuth(true)
             getForUser(user.user.id).then(data => {
                 orderDetails.setOrders(data)
                 data.map(i => {i.status === "Корзина" && cart.addToCart(i)})
             })
-            getAll().then(data => {
-                item.setTypes(data.data)
-                console.log(data.data)
-            })
-            getAllItem().then(data => {
-                item.setIsItem(data.data)
-                console.log(data.data)
-            })
-        }).finally(() => {setLoading(false)})
+            getAll().then(data => item.setTypes(data.data))
+            getAllItem().then(data => item.setIsItem(data.data)).finally(() => {setLoading(false)})
+        })
     }, [])
 
     if (loading){

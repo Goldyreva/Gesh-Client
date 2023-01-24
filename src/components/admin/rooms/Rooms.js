@@ -7,49 +7,70 @@ import Room from "./room/Room";
 
 const Rooms = observer( () => {
     let {item} = useContext(Context)
-    const [roomValue, setRoomValue] = useState([])
-    console.log(roomValue)
+    const [roomValue, setRoomValue] = useState({
+        name: "",
+        cost: "",
+        count: "",
+        description: "",
+        type_select: '1'
+    })
+    let filesObj = []
+
     const addItem = async () => {
-        let data = await create(roomValue)
-        item.setIsItem(data)
+        if(filesObj.length < 2) {
+            console.log('err')
+            return
+        }
+
+        let data = new FormData()
+        data.append('name', roomValue.name)
+        data.append('price', roomValue.cost)
+        data.append('count_people', roomValue.count)
+        data.append('description', roomValue.description)
+        data.append('typeId', roomValue.type_select)
+        for (let i = 0; i < filesObj.length; i++) {
+            data.append('img', filesObj[i], filesObj[i].name)
+        }
+
+        let dataRoom = await create(data)
+        item.setIsItem(dataRoom)
     }
+
     const roomHandler = (e) =>{
-        if(e.target.name === 'files'){
-            const formData = new FormData()
-            // img.append('foto', e.target.files)
-            console.log(formData)
-            // setRoomValue( roomValue => ({...roomValue, [formData]))
-        }else{
+        if(e.target.name === 'files') {
+            for (let i = 0; i < e.target.files.length; i++) {filesObj.push(e.target.files[i])}
+        } else{
             setRoomValue( roomValue => ({...roomValue, [e.target.name]: e.target.value}))
         }
-            console.log(roomValue)
     }
+
     const deleteType = async (id) => {
         let data = await deleteOneType(id)
         item.setIsItem(data)
     }
-    item.types.map(type => {console.log(type.name)}
+
+    // item.types.map(type => {console.log(type.name)}
         // <option value={type.name} key={type.id}>{type.name}</option>
-    )
+    // )
     return (
         <div className={s.root}>
             <h4>Добавить номер</h4>
             <div className={s.root__add_form}>
 
                 <input type="text" className={s.root__add_input} placeholder="Название" name="name" onChange={roomHandler}/>
-                <input type="number" className={s.root__add_input} placeholder="Стоимость" name="coast" onChange={roomHandler}/>
+                <input type="number" className={s.root__add_input} placeholder="Стоимость" name="cost" onChange={roomHandler}/>
                 <input type="number" className={s.root__add_input} placeholder="Количество людей" name="count" onChange={roomHandler}/>
                 <textarea className={s.root__add_input} placeholder="Описание" name="description" onChange={roomHandler}>
                 </textarea>
                 <select name="type_select" id="" onChange={roomHandler}>>
                     {
                         item.types.map(type =>
-                            <option value={type.name} key={type.id}>{type.name}</option>
+                            <option value={type.id} key={type.id}>{type.name}</option>
                         )
                     }
                 </select>
                 <form encType="multipart/form-data" action="" method="" id='formFile'>
-                    <input type="file" className={s.root__add_input} placeholder="Изображение" name="files" onChange={roomHandler}/>
+                    <input type="file" className={s.root__add_input} placeholder="Изображение" multiple name="files" onChange={roomHandler}/>
                 </form>
                     <p onClick={() => addItem()} className={s.root__add_btn}>Сохранить</p>
 
