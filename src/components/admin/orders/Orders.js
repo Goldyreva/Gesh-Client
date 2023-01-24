@@ -1,18 +1,52 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import s from "./Orders.module.sass";
 import {Context} from "../../../index";
-import {create, deleteOneType} from "../../../http/typeApi";
 import Order from "./order/Order";
-import {getAll} from "../../../http/orderApi";
+import {updateStatus} from "../../../http/orderApi";
 
 const Orders = observer( () => {
     let {orderDetails} = useContext(Context)
-    const [typeValue, setTypeValue] = useState()
 
-    const changeStatus = () => {
-
+    const changeStatus = async (id, status) => {
+        let data = updateStatus(id, status)
+        orderDetails.setStatus(id, status)
+        console.log(data)
     }
+
+    let sortedList = useMemo(() => {
+        let list = [...orderDetails.orders].sort((a, b) => {
+            if(a.status === 'Обработан' && b.status !== 'Обработан') {
+                return -1
+            }
+
+            if(a.status === 'Обработан' && b.status === 'Обработан') {
+                return 0
+            }
+
+            if(a.status !== 'Обработан' && b.status === 'Обработан') {
+                return 1
+            }
+
+        })
+
+        return list.sort((a, b) => {
+            if(a.status === 'Новый' && b.status !== 'Новый') {
+                return -1
+            }
+
+            if(a.status === 'Новый' && b.status === 'Новый') {
+                return 0
+            }
+
+            if(a.status !== 'Новый' && b.status === 'Новый') {
+                return 1
+            }
+        })
+    }, [])
+
+
+    console.log(sortedList)
 
     return (
         <div className={s.root}>
@@ -26,7 +60,7 @@ const Orders = observer( () => {
                     <p><b>Статус</b></p>
                     <p><b>Изменить статус</b></p>
                 </div>
-                {orderDetails.orders.map(item =>
+                {sortedList.map(item =>
                     <Order order={item} change={changeStatus}/>
                 )}
 

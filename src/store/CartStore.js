@@ -5,8 +5,8 @@ export default class CartStore {
 
     constructor() {
         this._active = false
-        makeAutoObservable(this)
         this._cart = []
+        makeAutoObservable(this)
     }
 
     setActive (bool) {
@@ -15,7 +15,6 @@ export default class CartStore {
     addToCart (array) {
         this._cart.push(array)
     }
-
     get isActive () {
         return this._active
     }

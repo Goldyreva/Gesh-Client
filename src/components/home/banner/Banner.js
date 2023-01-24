@@ -2,9 +2,9 @@ import React from 'react';
 import s from "./Banner.module.sass";
 import bannerBg from '../../../img/bannerBg.jpg'
 
-const Banner = () => {
+const Banner = React.forwardRef((props, forwardRef) => {
     return (
-        <div className={s.root}>
+        <div className={s.root} ref={forwardRef} id="banner">
             <div>
                 <div>
                     <h5>Всероссийская сеть туристических деревень</h5>
@@ -22,6 +22,6 @@ const Banner = () => {
             </div>
         </div>
     );
-};
+});
 
 export default Banner;

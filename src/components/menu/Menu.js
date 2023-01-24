@@ -13,7 +13,6 @@ const Menu = observer(() => {
         modal.setActive(true)
     }
 
-    console.log(user.user.role)
     return (
         <div className={menu.isActive ? `${s.root} ${s.active}` : `${s.root}`}>
             <div className={menu.isActive ? `${s.root__menu_cont} ${s.active}` : `${s.root__menu_cont}`}>

@@ -46,10 +46,10 @@ const OrderDetails = observer(() => {
                 </div>
                 <div className={s.root__info_cont}>
                     <p><b>Номер заказа:</b> {thisOrder.number}</p>
-                    <p><b>Даты пребывания:</b> {`${thisOrder.start_date} - ${thisOrder.end_date}`}</p>
-                    <p><b>Дата создания заказа:</b> {thisOrder.create_date}</p>
+                    <p><b>Даты пребывания:</b> {`${new Date(thisOrder.start_date).toLocaleDateString('ru-RU')} - ${new Date(thisOrder.end_date).toLocaleDateString('ru-RU')}`}</p>
+                    <p><b>Дата создания заказа:</b> {new Date(thisOrder.createdAt).toLocaleDateString('ru-RU')}</p>
                     <p><b>Статус:</b> {thisOrder.status}</p>
-                    <p><b>Номер:</b> {thisRoom.name}</p>
+                    <p><b>Объект:</b> {thisRoom.name}</p>
                     <p><b>Тип номера: </b>{thisType.name}</p>
                     <p><b>Стоимость/день:</b> {thisRoom.price}</p>
                 </div>

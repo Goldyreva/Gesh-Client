@@ -4,7 +4,6 @@ import s from "./Carousel.module.sass"
 const Carousel = ({images}) => {
     const [activeSlide, setActiveSlide] = useState(0)
     const [activeLink, setActiveLink] = useState(images[0].link)
-    console.log(images.length)
     const setSlide = (i) => {
         setActiveLink(i.link)
         setActiveSlide(images.indexOf(i))
@@ -12,7 +11,6 @@ const Carousel = ({images}) => {
     const nextSlide = () => {
         if(activeSlide < images.length - 1){
             setActiveSlide(activeSlide + 1)
-            // console.log(activeSlide)
         }else{
             setActiveSlide(0)
         }
@@ -20,24 +18,14 @@ const Carousel = ({images}) => {
     const lastSlide = () => {
         if(activeSlide > 0){
             setActiveSlide(activeSlide - 1)
-            console.log(activeSlide)
         }else{
             setActiveSlide(images.length - 1)
         }
     }
 
 
-
-    useEffect(() => {
-        console.log(activeSlide)
-    }, [activeSlide])
-
     return (
         <div className={s.root}>
-            {/*{images.map(img =>*/}
-            {/*    <img src={`${process.env.REACT_APP_API_URL}${img.link}`} key={img.id} alt=""/>*/}
-            {/*)}*/}
-            {/*<p>назад</p>*/}
             <div className={s.root__img_cont} style={{backgroundImage: `url(${process.env.REACT_APP_API_URL}${activeLink})`}} key={`pc${images[activeSlide].id}`}>
                 {
                     images.map((item) =>
