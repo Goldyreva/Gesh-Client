@@ -2,6 +2,8 @@ import React, {useContext, useState} from 'react';
 import s from "./Order.module.sass";
 import StatusConfirm from "../../confirm/StatusConfirm";
 import {Context} from "../../../../index";
+import CalendarDropdown from "../../../calendarDropdown/CalendarDropdown";
+import {update} from "../../../../http/orderApi";
 
 
 const Order = ({order, change}) => {
@@ -9,6 +11,16 @@ const Order = ({order, change}) => {
 
     const [active, setActive] = useState(false)
     const [statusValue, setStatusValue] = useState('')
+
+    const addAllData = (item) => {
+        console.log(item)
+        // let order = cart.getCart.find(o => o.id === item.id)
+        order.start_date = item.startDate
+        order.end_date = item.endDate
+        order.count_day = item.countDay
+        update(order.id, order.start_date, order.end_date, order.count_day, order.status)
+    }
+
     let info = {
         id: order.id,
         title: `Изменить статус заказа "${order.id}" на ${statusValue}?`,
@@ -27,7 +39,7 @@ const Order = ({order, change}) => {
         <div key={order.id} className={s.root}>
             <StatusConfirm active={active} setActive={() => setActive(!active)} info={info} change={change}/>
             <p>{order.id}</p>
-            <p>{`${order.start_date} - ${order.end_date}`}</p>
+            <CalendarDropdown id={order.id} data={order} add={addAllData}/>
             <ul>
                 <li>ФИО: {order.user.name}</li>
                 <li>E-mail: {order.user.email}</li>
@@ -40,35 +52,35 @@ const Order = ({order, change}) => {
                 <li>{thisItem.price} руб/сутки</li>
             </ul>
             <p>{order.status}</p>
-            <p>
+            <ul>
                 {
                     order.status === "Новый"
-                        ? <> <p onClick={() => {
+                        ? <> <li onClick={() => {
                             setActive(true)
                             setStatusValue('Обработан')
                         }
-                        } className={s.root__delete_btn}>Обработан</p>
-                        <p onClick={() => {
+                        } className={s.root__delete_btn}>Обработан</li>
+                        <li onClick={() => {
                             setActive(true)
                             setStatusValue('Завершен')
                         }
-                        } className={s.root__delete_btn}>Завершен</p>
-                        <p onClick={() => {setActive(true)
+                        } className={s.root__delete_btn}>Завершен</li>
+                        <li onClick={() => {setActive(true)
                         setStatusValue('Отменен')}
-                        } className={s.root__delete_btn}>Отменен</p> </>
+                        } className={s.root__delete_btn}>Отменен</li> </>
                     : order.status === "Обработан"
-                        ? <> <p onClick={() => {
+                        ? <> <li onClick={() => {
                                 setActive(true)
                                 setStatusValue('Завершен')
                             }
-                            } className={s.root__delete_btn}>Завершен</p>
-                            <p onClick={() => {setActive(true)
+                            } className={s.root__delete_btn}>Завершен</li>
+                            <li onClick={() => {setActive(true)
                                 setStatusValue('Отменен')}
-                            } className={s.root__delete_btn}>Отменен</p> </>
-                            : <p> </p>
+                            } className={s.root__delete_btn}>Отменен</li> </>
+                            : <li> </li>
 
                 }
-            </p>
+            </ul>
         </div>
     );
 };
