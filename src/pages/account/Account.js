@@ -204,7 +204,7 @@ const Account = observer(() => {
                         </div>
                         <div className={s.root__orders}>
                             {orderDetails.orders.map(item =>
-                                item.status !== "Корзина" &&
+                                (item.status !== "Корзина" && item.userId === user.user.id) &&
                                 <div className={s.root__order_content} key={item.id}>
                                     <div className={`${s.root__order_grid} ${s.grid_header}`}>
                                         <div><span>Номер заказа</span></div>
