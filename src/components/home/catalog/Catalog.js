@@ -52,7 +52,8 @@ const Catalog = React.forwardRef((props, forwardRef) => {
 
     const addItemToCart = (item) => {
         create(startDate.toISOString(), endDate === null ? new Date(0) : endDate.toISOString(), countDay, user.user.id, item)
-            .then(data => {cart.addToCart(data)
+            .then(data => {
+                cart.addToCart(data)
                 setConfirmActive(true)
             })
         }

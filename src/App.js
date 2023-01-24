@@ -15,28 +15,44 @@ import {check} from "./http/userApi";
 import {getAll} from "./http/typeApi";
 import {getAll as getAllItem} from "./http/roomApi"
 import {getForUser} from "./http/orderApi";
+import {$authHost, $host} from "./http";
+import axios from "axios";
 
 const App = observer(() => {
     const {user, cart, orderDetails, item} = useContext(Context)
     const [loading, setLoading] = useState(true)
 
+    const [countFetch, setCountFetch] = useState(0)
+
     useEffect(()=>{
+        let endpoint = [
+            `/api/type/getAll`,
+            `/api/item/getAll`
+        ]
+        Promise.all(endpoint.map(endpoint => $authHost.get(endpoint)))
+            .then(([{data: types}, {data: items}]) => {
+                item.setTypes(types)
+                item.setIsItem(items)
+            }).finally(() => {setCountFetch(countFetch => countFetch + 1)})
+
         check().then(data => {
             user.setUser(data)
             user.setIsAuth(true)
-            getForUser(user.user.id).then(data => {
-                orderDetails.setOrders(data)
-                data.map(i => {i.status === "Корзина" && cart.addToCart(i)})
-            })
-        }).finally(() => {setLoading(false)})
-        setLoading(true)
-        getAll().then(data => item.setTypes(data.data))
-        getAllItem().then(data => {
-            item.setIsItem(data.data)
-        }).finally(() => {setLoading(false)})
+            let endpointAuth = [
+                `api/order/getForUser?userId=${user.user.id}`
+            ]
+            Promise.all(endpointAuth.map(endpoint => $authHost.get(endpoint)))
+                .then(([{data: orders}]) => {
+                    orderDetails.setOrders(orders)
+                    orders.map(i => {i.status === "Корзина" && cart.addToCart(i)})
+                }).finally(() => {setCountFetch(countFetch => countFetch + 1)})
+        })
     }, [])
 
-    if (loading){
+    if(!user.isAuth && countFetch < 1) {
+        return <h2>Загрузка...</h2>
+    }
+    if (user.isAuth && countFetch < 2){
         return <h2>Загрузка...</h2>
     }
     return (

@@ -1,7 +1,8 @@
 import Admin from "./pages/admin/Admin";
-import {ADMIN_ROUTE, HOME_ROUTE, ACCOUNT_ROUTE} from "./utils/consts";
+import {ADMIN_ROUTE, HOME_ROUTE, ACCOUNT_ROUTE, QR_ROUTE} from "./utils/consts";
 import Home from "./pages/home/Home";
 import Account from "./pages/account/Account";
+import QrCode from "./pages/qrCode/QrCode";
 
 export const authRoutes = [
     {
@@ -19,12 +20,9 @@ export const publicRoutes = [
         path: HOME_ROUTE + ":block?",
         Component: Home
     },
-    // {
-    //     path: LOGIN_ROUTE,
-    //     Component: Account
-    // },
-    // {
-    //     path: REGISTRATION_ROUTE,
-    //     Component: Account
-    // },
+    {
+        path: QR_ROUTE + "/:id",
+        Component: QrCode
+    },
+
 ]

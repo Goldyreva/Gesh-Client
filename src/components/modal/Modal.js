@@ -114,6 +114,7 @@ const Modal = observer(() => {
             user.setUser(data)
             user.setIsAuth(true)
             modal.setActive(false)
+            window.location.reload()
         } catch (e){
             if(tab === false) {
                 setAuthError(e.response.data.message)

@@ -81,6 +81,9 @@ const Map = React.forwardRef((props, forwardRef) => {
         let data = create(feedbackField.phone, feedbackField.name, feedbackField.message)
             .then(data => setConfirmActive(true))
             .catch(e => setError(e.response.data.message))
+        document.querySelectorAll('.finput').forEach((i) =>{
+            i.value = ""
+        })
     }
     return (
         <div className={s.root} id="map" ref={forwardRef}>
@@ -98,13 +101,13 @@ const Map = React.forwardRef((props, forwardRef) => {
 
                     <h4>воспользуйтесь формой обратной связи:</h4>
                     <form action="">
-                        <input type="text" className="text" name="name" placeholder="ВАШЕ ИМЯ"
+                        <input type="text" className="text finput" name="name" placeholder="ВАШЕ ИМЯ"
                                onChange={feedbackHandler} onBlur={e => blurHandler(e)}/>
                         {(nameDirty && nameError) && <div className={s.root__error}>{nameError}</div>}
-                        <input type="tel" className="tel" name="phone" placeholder="+7(999)-999-99-99"
+                        <input type="tel" className="tel finput" name="phone" placeholder="+7(999)-999-99-99"
                                onChange={feedbackHandler} onBlur={e => blurHandler(e)}/>
                         {(phoneDirty && phoneError) && <div className={s.root__error}>{phoneError}</div>}
-                        <textarea name="" id="" cols="30" rows="10" name="message" placeholder="ВАШЕ СООБЩЕНИЕ"
+                        <textarea className="finput" id="" cols="30" rows="10" name="message" placeholder="ВАШЕ СООБЩЕНИЕ"
                                   onChange={feedbackHandler} onBlur={e => blurHandler(e)}></textarea>
                         {(messageDirty && messageError) && <div className={s.root__error}>{messageError}</div>}
                         <div className={s.root__error}>{error}</div>

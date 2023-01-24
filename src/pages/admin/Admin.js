@@ -10,7 +10,7 @@ import Rooms from "../../components/admin/rooms/Rooms";
 import {getAll} from "../../http/orderApi";
 
 const Admin = observer( () => {
-    let {admin, orderDetails} = useContext(Context)
+    let {admin, orderDetails, user} = useContext(Context)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -24,26 +24,32 @@ const Admin = observer( () => {
     }
     return (
         <div className={s.root}>
-            <div className={s.root__admin_cont}>
-                <div className={s.root__header}>
-                    <p onClick={() => admin.setActive(1)}>Заказы</p>
-                    <p onClick={() => admin.setActive(2)}>Обратная связь</p>
-                    <p onClick={() => admin.setActive(3)}>Номера</p>
-                    <p onClick={() => admin.setActive(4)}>Типы</p>
-                </div>
-                <div className={s.root__main}>
-                    {admin.isActive === 1
-                        ? <Orders/>
-                        : admin.isActive === 2
-                            ? <Feedback/>
-                            : admin.isActive === 3
-                                ? <Rooms/>
-                                : admin.isActive === 4
-                                    ? <Types/>
-                                    : <Orders/>
-                    }
-                </div>
-            </div>
+            {
+                user.user.role === "ADMIN"
+                    ? <>
+                        <div className={s.root__admin_cont}>
+                            <div className={s.root__header}>
+                                <p onClick={() => admin.setActive(1)}>Заказы</p>
+                                <p onClick={() => admin.setActive(2)}>Обратная связь</p>
+                                <p onClick={() => admin.setActive(3)}>Номера</p>
+                                <p onClick={() => admin.setActive(4)}>Типы</p>
+                            </div>
+                            <div className={s.root__main}>
+                                {admin.isActive === 1
+                                    ? <Orders/>
+                                    : admin.isActive === 2
+                                        ? <Feedback/>
+                                        : admin.isActive === 3
+                                            ? <Rooms/>
+                                            : admin.isActive === 4
+                                                ? <Types/>
+                                                : <Orders/>
+                                }
+                            </div>
+                        </div>
+                        </>
+                        : <p>Cтраница недоступна</p>
+            }
             <Footer/>
         </div>
     );

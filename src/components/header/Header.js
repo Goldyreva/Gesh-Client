@@ -18,6 +18,7 @@ const Header = observer(() => {
         user.setIsAuth(false)
         localStorage.removeItem('token')
         history.push(HOME_ROUTE)
+        window.location.reload()
     }
     return (
         <div className={s.root}>
@@ -28,7 +29,7 @@ const Header = observer(() => {
                 </NavLink>
                 <div className={s.root__popUpBtn_cont}>
                     {user.isAuth
-                        ?<><a className={s.root__popUpBtn} onClick={() => cart.setActive(true)}><img src={cartImg} alt=""/> <p>1</p></a><a className={s.root__popUpBtn} onClick={() => logOut()}><img src={reg} alt=""/></a></>
+                        ?<><a className={s.root__popUpBtn} onClick={() => cart.setActive(true)}><img src={cartImg} alt=""/> <p>{cart.getCart.length}</p></a><a className={s.root__popUpBtn} onClick={() => logOut()}><img src={reg} alt=""/></a></>
                         :<a className={s.root__popUpBtn} onClick={() => modal.setActive(true)}><img src={reg} alt=""/></a>
                     }
 

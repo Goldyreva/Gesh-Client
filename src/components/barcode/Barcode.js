@@ -1,11 +1,16 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import s from "./Barcode.module.sass";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
+import {QRCodeSVG} from 'qrcode.react';
+import {QR_ROUTE} from "../../utils/consts";
 
 const Barcode = observer(() => {
     let {barcode} = useContext(Context)
 
+    useEffect(() => {
+        console.log(`https://${process.env.REACT_APP_DOMEN_URL}${QR_ROUTE}/${barcode.isId}`)
+    })
     return(
 
         <div className={barcode.isActive ? `${s.root} ${s.active}` : `${s.root}`} onClick={() => barcode.setActive(false)}>
@@ -19,7 +24,7 @@ const Barcode = observer(() => {
                     </div>
                 </div>
                 <div>
-                    {barcode.isId}
+                    <QRCodeSVG value={`https://${process.env.REACT_APP_DOMEN_URL}${QR_ROUTE}/${barcode.isId}`} />
                 </div>
             </div>
         </div>

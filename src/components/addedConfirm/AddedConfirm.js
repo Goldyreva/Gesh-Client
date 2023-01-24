@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import s from "./AddedConfirm.module.sass";
 
 const AddedConfirm = ({active, setActive, text}) => {
-    console.log(active)
     useEffect(() => {
         setTimeout(()=>{setActive(false)}, 5000)
     }, [active])
