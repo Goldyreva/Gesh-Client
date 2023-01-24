@@ -3,8 +3,6 @@ import s from './Catalog.module.sass'
 import {Context} from "../../../index";
 import Calendar from "../../Calendar/Calendar";
 import {create} from "../../../http/orderApi";
-import {getAll} from "../../../http/typeApi";
-import {getAll as getAllItem} from "../../../http/roomApi";
 import Carousel from "../../carousel/Carousel";
 import {useSortedData} from "../../../hooks/useSort";
 

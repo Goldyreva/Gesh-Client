@@ -18,6 +18,13 @@ export default class OrderDetailsStore {
     setOrders(orders) {
         this._orders = orders
     }
+    setStatus(id, status) {
+        this._orders.map((i) => {
+            if(i.id === id){
+                i.status = status
+            }
+        })
+    }
 
     get isActive () {
         return this._active
