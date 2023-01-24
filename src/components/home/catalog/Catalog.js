@@ -4,12 +4,11 @@ import {Context} from "../../../index";
 import Calendar from "../../Calendar/Calendar";
 import {create} from "../../../http/orderApi";
 import Carousel from "../../carousel/Carousel";
-import {useSortedData} from "../../../hooks/useSort";
 import AddedConfirm from "../../addedConfirm/AddedConfirm";
 
 
 const Catalog = React.forwardRef((props, forwardRef) => {
-    const {item, cart, user} = useContext(Context)
+    const {item, cart, user, orderDetails} = useContext(Context)
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
@@ -30,14 +29,45 @@ const Catalog = React.forwardRef((props, forwardRef) => {
     const [activePeople, setActivePeople] = useState(false);
     const [activeDate, setActiveDate] = useState(false);
 
-    let list = useSortedData(item, kidCount+peopleCount, activeType)
-
     const onChange = (dates) => {
         const [start, end] = dates;
         setStartDate(start);
         setEndDate(end);
         setChangeDate(true)
     };
+
+    const delById = (arr, id) => {
+        const i = arr.findIndex(el => el.id === id);
+        if (-1 === i) return arr;
+        arr.splice(i, 1);
+        return arr;
+    }
+
+    const myList = useMemo(() => {
+        let list = item.items.filter(room => room.count_people >= peopleCount + kidCount)
+        if (activeType !== '') {
+            list = list.filter(room => item.types.filter(i => i.id === room.typeId)[0].name.toUpperCase() === activeType)
+        }
+
+        let orders = orderDetails.orders.filter(order => order.status === 'Новый' || order.status === 'Обработан')
+        let test = []
+
+        for(let j = 0; j < orders.length; j++) {
+            let sd = new Date(orders[j].start_date)
+            let ed = new Date(orders[j].end_date)
+            if((endDate >= sd && startDate <= ed)) {
+                test.push(orders[j].itemId)
+            }
+        }
+
+        if(test.length === 0) {return list}
+
+        let myList = list
+        for(let i = 0; i < test.length; i++) {
+            myList = delById(myList, test[i])
+        }
+        return myList
+    }, [startDate, endDate, kidCount, peopleCount, activeType])
 
     useEffect(() => {
         let sDate = startDate ? startDate.toLocaleDateString('ru-RU') : ''
@@ -141,9 +171,9 @@ const Catalog = React.forwardRef((props, forwardRef) => {
                 </form>
             </div>
             <div className={s.root__cart_cont}>
-                {list.length === 0
+                {myList.length === 0
                     ? <p className={s.root__cart_null}>Номера не найдены:(</p>
-                    : list.map(item =>
+                    : myList.map(item =>
                         <div className={s.root__cart} key={item.id}>
                             <div>
                                 <Carousel images={item.itemsImages}/>
