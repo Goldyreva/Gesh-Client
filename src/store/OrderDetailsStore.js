@@ -6,6 +6,7 @@ export default class OrderDetailsStore {
         this._active = false
         this._id = null
         this._orders = []
+        this._ordersUser = []
         makeAutoObservable(this)
     }
 
@@ -17,6 +18,9 @@ export default class OrderDetailsStore {
     }
     setOrders(orders) {
         this._orders = orders
+    }
+    setOrdersUser(orders) {
+        this._ordersUser = orders
     }
     setStatus(id, status) {
         this._orders.map((i) => {
@@ -34,6 +38,9 @@ export default class OrderDetailsStore {
     }
     get orders(){
         return this._orders
+    }
+    get ordersUser() {
+        return this._ordersUser
     }
 
 }

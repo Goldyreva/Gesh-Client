@@ -45,6 +45,7 @@ const App = observer(() => {
             Promise.all(endpointAuth.map(endpoint => $authHost.get(endpoint)))
                 .then(([{data: orders}, {data: ordersUser}]) => {
                     orderDetails.setOrders(orders)
+                    orderDetails.setOrdersUser(ordersUser)
                     ordersUser.map(i => {i.status === "Корзина" && cart.addToCart(i)})
                 }).finally(() => {setCountFetch(countFetch => countFetch + 1)})
         })
