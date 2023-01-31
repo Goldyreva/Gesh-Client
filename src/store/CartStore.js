@@ -15,6 +15,10 @@ export default class CartStore {
     addToCart (array) {
         this._cart.push(array)
     }
+
+    clearCart () {
+        this._cart = []
+    }
     get isActive () {
         return this._active
     }

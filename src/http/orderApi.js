@@ -13,7 +13,7 @@ export const getAll = async (id) => {
     return data
 }
 export const getOne = async (id) => {
-    const {data} = await $authHost.get(`api/order/getOne?id=${id}`, )
+    const {data} = await $authHost.get(`api/order/getOne?id=${id}`)
     return data
 }
 export const update = async (id, start_date, end_date, count_day, status) => {
@@ -22,5 +22,10 @@ export const update = async (id, start_date, end_date, count_day, status) => {
 }
 export const updateStatus = async (id, status) => {
     const {data} = await $authHost.post(`api/order/updateStatus`, {id, status})
+    return data
+}
+
+export const deleteOrder = async (id) => {
+    const {data} = await $authHost.get(`api/order/delete?id=${id}`)
     return data
 }
