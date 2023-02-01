@@ -9,7 +9,7 @@ const Barcode = observer(() => {
     let {barcode} = useContext(Context)
 
     useEffect(() => {
-        console.log(`https://${process.env.REACT_APP_DOMEN_URL}${QR_ROUTE}/${barcode.isId}`)
+        console.log(`${process.env.REACT_APP_DOMEN_URL}${QR_ROUTE}/${barcode.isId}`)
     })
     return(
 
@@ -24,7 +24,7 @@ const Barcode = observer(() => {
                     </div>
                 </div>
                 <div>
-                    <QRCodeSVG value={`https://${process.env.REACT_APP_DOMEN_URL}${QR_ROUTE}/${barcode.isId}`} />
+                    <QRCodeSVG value={`${process.env.REACT_APP_DOMEN_URL}${QR_ROUTE}/${barcode.isId}`} />
                 </div>
             </div>
         </div>

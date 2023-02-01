@@ -52,10 +52,24 @@ const App = observer(() => {
     }, [])
 
     if(!user.isAuth && countFetch < 1) {
-        return <h2>Загрузка...</h2>
+        return <div className="loader">
+            <div className="lds_ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
     }
     if (user.isAuth && countFetch < 2){
-        return <h2>Загрузка...</h2>
+        return <div className="loader">
+            <div className="lds_ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
     }
     return (
         <BrowserRouter>
