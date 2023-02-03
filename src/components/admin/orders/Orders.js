@@ -11,7 +11,6 @@ const Orders = observer( () => {
     const changeStatus = async (id, status) => {
         let data = updateStatus(id, status)
         orderDetails.setStatus(id, status)
-        console.log(data)
     }
 
     let sortedList = useMemo(() => {
@@ -44,9 +43,6 @@ const Orders = observer( () => {
             }
         })
     }, [])
-
-
-    console.log(sortedList)
 
     return (
         <div className={s.root}>

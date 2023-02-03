@@ -7,7 +7,6 @@ const Banner = React.forwardRef((props, forwardRef) => {
         <div className={s.root} ref={forwardRef} id="banner">
             <div>
                 <div>
-                    <h5>Всероссийская сеть туристических деревень</h5>
                     <h1>GESH VILLAGE</h1>
                 </div>
                 <div className={s.root__btn_cont}>

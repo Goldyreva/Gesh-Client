@@ -15,7 +15,6 @@ const QrCode = () => {
     if(count < 1) {
         return <h2>Загрузка...</h2>
     }
-    console.log(info)
     return (
         <div className={s.root}>
             {

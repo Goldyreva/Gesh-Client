@@ -39,8 +39,7 @@ const Header = observer(() => {
             <div className={s.root__contact}>
                 <div>
                     <div className={s.root__contact_cont}><img src={phone} alt="phone"/><a href="tel:+79044838228">+7(904)483-82-28</a></div>
-                    <NavLink to={HOME_ROUTE + 'map'} className={s.root__contact_order}>Записаться&nbsp;на&nbsp;просмотр</NavLink>
-                </div>
+                    </div>
             </div>
         </div>
     );

@@ -1,5 +1,4 @@
 import {makeAutoObservable} from "mobx";
-import ItemStore from "./ItemStore";
 
 export default class CartStore {
 

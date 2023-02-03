@@ -8,7 +8,6 @@ import Type from "./type/Type";
 const Types = observer( () => {
     let {item} = useContext(Context)
     const [typeValue, setTypeValue] = useState()
-    console.log(typeValue)
     const addType = async () => {
         let data = await create(typeValue)
         item.addType(data)

@@ -23,7 +23,16 @@
     box-shadow: 0px 5px 5px 2px rgba(34, 60, 80, 0.2)
   &__close
     align-self: flex-end
+  &__header_img
+    width: 15px
+  svg
+    height: 15px
+  &__close
     cursor: pointer
+    align-self: flex-end
+  &__close:hover path
+    fill: #FF8A36
+    transition: all 0.2s linear
 .root ul
   display: flex
   flex-direction: column
@@ -46,3 +55,8 @@
 
 .active
   transform: translateX(0)
+  z-index: 101
+
+@media screen and (max-width: 500px)
+  .root
+    width: 100%

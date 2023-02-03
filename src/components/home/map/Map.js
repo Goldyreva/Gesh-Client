@@ -77,7 +77,6 @@ const Map = React.forwardRef((props, forwardRef) => {
     }
     const submitBtn = async (e) => {
         e.preventDefault()
-        console.log(feedbackField)
         let data = create(feedbackField.phone, feedbackField.name, feedbackField.message)
             .then(data => setConfirmActive(true))
             .catch(e => setError(e.response.data.message))

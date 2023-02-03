@@ -13,8 +13,6 @@ const Order = ({order, change}) => {
     const [statusValue, setStatusValue] = useState('')
 
     const addAllData = (item) => {
-        console.log(item)
-        // let order = cart.getCart.find(o => o.id === item.id)
         order.start_date = item.startDate
         order.end_date = item.endDate
         order.count_day = item.countDay
@@ -32,7 +30,6 @@ const Order = ({order, change}) => {
     item.items.map((i) => {
         if (i.id === order.itemId) {
             thisItem = i
-            console.log(thisItem)
         }
     })
     return (

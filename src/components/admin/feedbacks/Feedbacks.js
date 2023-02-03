@@ -20,8 +20,6 @@ const Feedbacks = observer( () => {
         })
     }, [])
 
-    // feedbackArray.sort((x, y) => x.status.localeCompare(y.status));
-    console.log(feedbackArray);
     return (
         <div className={s.root}>
             <h4>Обратная связь</h4>
