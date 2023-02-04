@@ -3,8 +3,7 @@ import s from './Account.module.sass'
 import Footer from "../../components/footer/Footer";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
-import {login, registration, userInfo, edit} from "../../http/userApi";
-import {LOGIN_ROUTE} from "../../utils/consts";
+import {userInfo, edit} from "../../http/userApi";
 
 
 const Account = observer(() => {
@@ -21,15 +20,16 @@ const Account = observer(() => {
     const [regError, setRegError] = useState("")
     const [inputField, setInputField] = useState({})
     const [constField, setConstField] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        password: ''
+        name: user.user.name,
+        email: user.user.email,
+        phone: user.user.phone,
+        password: user.user.password
     })
 
     useEffect(() => {
         userInfo(user.user.id).then(data => {
             setInputField(data)
+            setConstField(data)
         })
     }, [])
 
@@ -80,8 +80,6 @@ const Account = observer(() => {
                 inputValue = "+" + e.target.value
             }
             e.target.value = inputValue
-            console.log(e.target.value)
-            console.log(e.target.value.length)
             setInputField(inputField => ({...inputField, [e.target.name]: e.target.value}))
             setPhoneError('')
         }
@@ -108,16 +106,18 @@ const Account = observer(() => {
     const back = () => {
         setInputField(inputField => ({...constField}))
         setEditActive(false)
+        setEmailDirty(false)
+        setNameDirty(false)
+        setPhoneDirty(false)
+        setPasswordDirty(false)
     }
 
     const submitButton = () => {
         setEditActive(false)
         setConstField(constField => ({...inputField}))
-        console.log(inputField)
         let data = edit(inputField.email, inputField.phone, inputField.name, inputField.password, user.user.id)
         user.setUser(data)
     }
-    console.log(orderDetails.orders)
     return (
         <div className={s.root}>
             <div className={s.root__header}>
@@ -215,7 +215,7 @@ const Account = observer(() => {
                                     <div className={s.root__order_grid}>
                                         <div>{item.id}</div>
                                         <div>{item.status}</div>
-                                        <div><a onClick={() => {
+                                        <div><a href="" onClick={() => {
                                             orderDetails.setActive(true)
                                             orderDetails.setId(item.id)
                                         }}>Перейти</a></div>

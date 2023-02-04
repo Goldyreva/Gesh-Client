@@ -16,7 +16,7 @@ const Tourist = () => {
                     <p>Продвижение природных
                         достопримечательностей России
                         за рубежом и среди любителей
-                        outdoorтуризма
+                        outdoor туризма
                     </p>
                 </div>
                 <div className={s.root__tourist_item}>

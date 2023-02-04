@@ -1,8 +1,10 @@
 import Admin from "./pages/admin/Admin";
-import {ADMIN_ROUTE, HOME_ROUTE, ACCOUNT_ROUTE, QR_ROUTE} from "./utils/consts";
+import {ADMIN_ROUTE, HOME_ROUTE, ACCOUNT_ROUTE, QR_ROUTE, TERMS_ROUTE, OFFER_ROUTE} from "./utils/consts";
 import Home from "./pages/home/Home";
 import Account from "./pages/account/Account";
 import QrCode from "./pages/qrCode/QrCode";
+import Terms from "./pages/Terms/Terms";
+import Offer from "./pages/Offer/Offer";
 
 export const authRoutes = [
     {
@@ -17,12 +19,20 @@ export const authRoutes = [
 
 export const publicRoutes = [
     {
+        path: TERMS_ROUTE,
+        Component: Terms
+    },
+    {
+        path: OFFER_ROUTE,
+        Component: Offer
+    },
+    {
         path: HOME_ROUTE + ":block?",
         Component: Home
     },
     {
         path: QR_ROUTE + "/:id",
         Component: QrCode
-    },
+    }
 
 ]

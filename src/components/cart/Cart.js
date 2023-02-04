@@ -35,7 +35,6 @@ const Cart = observer(() => {
 
     const deleteCartItem = (id) => {
         setLoading(true)
-        console.log(id)
         deleteOrder(id)
             .then(data => {
                 let endpointAuth = [
@@ -54,9 +53,6 @@ const Cart = observer(() => {
             })
     }
 
-    const pay = () => {
-        console.log('Pay')
-    }
 
     return(
         <div className={cart.isActive ? `${s.root} ${s.active}` : `${s.root}`} onClick={() => cart.setActive(false)}>
@@ -99,7 +95,7 @@ const Cart = observer(() => {
 
                     <h4>ИТОГО: {cost} руб.</h4>
                 </div>
-                <div className={s.root_reg} onClick={() => pay()}>
+                <div className={s.root_reg} >
                     <p className={s.root__btn_submit}>Оплатить</p>
                 </div>
             </div>

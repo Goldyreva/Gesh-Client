@@ -12,15 +12,10 @@ import Barcode from "./components/barcode/Barcode";
 import {observer} from "mobx-react-lite";
 import {Context} from "./index";
 import {check} from "./http/userApi";
-import {getAll} from "./http/typeApi";
-import {getAll as getAllItem} from "./http/roomApi"
-import {getForUser} from "./http/orderApi";
-import {$authHost, $host} from "./http";
-import axios from "axios";
+import {$authHost} from "./http";
 
 const App = observer(() => {
     const {user, cart, orderDetails, item} = useContext(Context)
-    const [loading, setLoading] = useState(true)
 
     const [countFetch, setCountFetch] = useState(0)
 

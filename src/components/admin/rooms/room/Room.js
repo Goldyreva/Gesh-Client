@@ -12,7 +12,7 @@ const Room = ({item, del}) => {
         title: `Удалить номер "${item.name}"?`,
         btn: 'Удалить'
     }
-    console.log(item)
+
     return (
         <div key={item.id} className={s.root}>
             <Confirm active={active} setActive={() => setActive(!active)} info={info} del={del}/>

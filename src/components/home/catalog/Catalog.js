@@ -5,6 +5,7 @@ import Calendar from "../../Calendar/Calendar";
 import {create} from "../../../http/orderApi";
 import Carousel from "../../carousel/Carousel";
 import AddedConfirm from "../../addedConfirm/AddedConfirm";
+import ProductCard from "../../productCard/ProductCard";
 
 
 const Catalog = React.forwardRef((props, forwardRef) => {
@@ -15,6 +16,9 @@ const Catalog = React.forwardRef((props, forwardRef) => {
     const [countDay, setCountDay] = useState(0)
     const [rangeDate, setRangeDate] = useState('')
     const [changeDate, setChangeDate] = useState(false)
+
+    const [cardActive, setCardActive] = useState(false)
+    const [cardInfo, setCardInfo] = useState([])
 
     const [peopleCount, setPeopleCount] = useState(0)
     const [kidCount, setKidCount] = useState(0)
@@ -28,6 +32,7 @@ const Catalog = React.forwardRef((props, forwardRef) => {
     const [active, setActive] = useState(false);
     const [activePeople, setActivePeople] = useState(false);
     const [activeDate, setActiveDate] = useState(false);
+
 
     const onChange = (dates) => {
         const [start, end] = dates;
@@ -86,10 +91,12 @@ const Catalog = React.forwardRef((props, forwardRef) => {
                 cart.addToCart(data)
                 setConfirmActive(true)
             })
-        }
+    }
+
 
     return (
     <div className={s.root} id="catalog" ref={forwardRef}>
+        <ProductCard active={cardActive} setActive={setCardActive} info={cardInfo}/>
         <AddedConfirm text={`Объект "${confirmRoom}" добавлен в корзину`} active={confirmActive} setActive={setConfirmActive}/>
         <div className={s.root__header}>
                 <div className={s.root__h2_cont}><h2>КАТАЛОГ ОБЬЕКТОВ</h2></div>
@@ -175,12 +182,11 @@ const Catalog = React.forwardRef((props, forwardRef) => {
                 {myList.length === 0
                     ? <p className={s.root__cart_null}>Номера не найдены:(</p>
                     : myList.map(item =>
-                        <div className={s.root__cart} key={item.id}>
-                            <div>
-                                <Carousel images={item.itemsImages}/>
-                                {/*{item.itemsImages.map(img =>*/}
-                                {/*    <img src={`${process.env.REACT_APP_API_URL}${img.link}`} key={img.id} alt=""/>*/}
-                                {/*)}*/}
+                        <div className={s.root__cart} key={item.id} onClick={() => {setCardActive(true)
+                            setCardInfo(item)}}>
+
+                            <div className={s.root__carousel_cont}>
+                                <Carousel images={item.itemsImages} keySimbols={"catalog"}/>
                             </div>
 
                             <div className={s.root__cart_header}>
@@ -188,27 +194,14 @@ const Catalog = React.forwardRef((props, forwardRef) => {
                                 <h5>{`ОТ ${item.price} РУБ/СУТКИ`}</h5>
                             </div>
                             <div className={s.root__cart_content}>
-                                <p>{item.description}</p>
-                                <svg onClick={() => {addItemToCart(item.id)
+                                <p className={s.root__cart_p}>{item.description}</p>
+                                <p onClick={e =>{e.stopPropagation()
+                                    addItemToCart(item.id)
                                     setConfirmRoom(item.name)
-                                }} width="33" height="33" viewBox="0 0 33 33"
-                                     fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M31 32.5C31.8284 32.5 32.5 31.8284 32.5 31L32.5 17.5C32.5 16.6716 31.8284 16 31 16C30.1716 16 29.5 16.6716 29.5 17.5L29.5 29.5L17.5 29.5C16.6716 29.5 16 30.1716 16 31C16 31.8284 16.6716 32.5 17.5 32.5L31 32.5ZM0.93934 3.06066L29.9393 32.0607L32.0607 29.9393L3.06066 0.93934L0.93934 3.06066Z"/>
-                                    <defs>
-                                        <linearGradient id="paint0_linear_23_96" x1="16.5" y1="16.5" x2="7.65724e-06"
-                                                        y2="9.99998" gradientUnits="userSpaceOnUse">
-                                            <stop stopColor="#FF8A36"/>
-                                            <stop offset="1" stopColor="#FF8A36" stopOpacity="0"/>
-                                        </linearGradient>
-                                        <linearGradient id="paint1" x1="16.5" y1="16.5" x2="7.65724e-06" y2="9.99998"
-                                                        gradientUnits="userSpaceOnUse">
-                                            <stop stopColor="#ff9d5c"/>
-                                            <stop offset="1" stopColor="#ff9d5c" stopOpacity="0"/>
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
+                                }} className={s.root__add_btn}>
+                                    Забронировать
+                                </p>
+                                <p className={s.root__info_btn}>Узнать подробнее</p>
                             </div>
                         </div>
                     )

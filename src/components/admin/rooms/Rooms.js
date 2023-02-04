@@ -18,7 +18,6 @@ const Rooms = observer( () => {
 
     const addItem = async () => {
         if(filesObj.length < 2) {
-            console.log('err')
             return
         }
 
@@ -49,9 +48,6 @@ const Rooms = observer( () => {
         item.setIsItem(data)
     }
 
-    // item.types.map(type => {console.log(type.name)}
-        // <option value={type.name} key={type.id}>{type.name}</option>
-    // )
     return (
         <div className={s.root}>
             <h4>Добавить номер</h4>
