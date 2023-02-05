@@ -83,7 +83,7 @@ const Rooms = observer( () => {
                     <p><b>Удалить</b></p>
                 </div>
                 {item.items.map(item =>
-                    <Room item={item} del={deleteType} />
+                    <Room item={item} del={deleteType} key={`room${item.id}`}/>
                 )}
             </div>
         </div>

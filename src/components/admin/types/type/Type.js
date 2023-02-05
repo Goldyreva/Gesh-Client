@@ -14,7 +14,7 @@ const Type = ({item, del}) => {
 
     return (
         <div key={item.id} className={s.root}>
-            <Confirm active={active} setActive={() => setActive(!active)} info={info} del={del}/>
+            <Confirm active={active} setActive={() => setActive(!active)} info={info} del={del} key={`tjtj${item.id}`}/>
             <p>{item.id}</p>
             <p>{item.name}</p>
             <p onClick={() => setActive(true)} className={s.root__delete_btn}>Удалить</p>

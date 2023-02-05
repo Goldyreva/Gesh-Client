@@ -33,7 +33,7 @@ const Order = ({order, change}) => {
         }
     })
     return (
-        <div key={order.id} className={s.root}>
+        <div className={s.root}>
             <StatusConfirm active={active} setActive={() => setActive(!active)} info={info} change={change}/>
             <p>{order.id}</p>
             <CalendarDropdown id={order.id} data={order} add={addAllData}/>
