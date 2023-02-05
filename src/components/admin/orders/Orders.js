@@ -57,7 +57,7 @@ const Orders = observer( () => {
                     <p><b>Изменить статус</b></p>
                 </div>
                 {sortedList.map(item =>
-                    <Order order={item} change={changeStatus}/>
+                    <Order order={item} change={changeStatus} key={item.id}/>
                 )}
 
             </div>

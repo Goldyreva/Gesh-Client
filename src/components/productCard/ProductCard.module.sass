@@ -12,7 +12,6 @@
   opacity: 0
   pointer-events: none
   transition: 0.2s all linear
-  overflow-y: scroll
   &__modal_content
     background-image: url("../../img/popUpBg.jpg")
     background-size: cover
@@ -24,6 +23,8 @@
     flex-direction: column
     align-items: center
     border-radius: 16px
+    overflow-y: scroll
+    max-height: 90vh
   &__header
     width: 100%
     display: flex
@@ -34,6 +35,7 @@
     justify-content: space-between
   &__carousel_cont
     width: 60%
+    max-height: 80vh
   &__info_cont
     width: 36%
     display: flex
@@ -47,6 +49,11 @@
       color: white
       font-size: 20px
       font-family: 'Open Sans', sans-serif
+      white-space: pre-wrap
+      white-space: -moz-pre-wrap
+      white-space: -pre-wrap
+      white-space: -o-pre-wrap
+      word-wrap: break-word
     h4
       color: white
       font-size: 28px

@@ -14,10 +14,9 @@ const Room = ({item, del}) => {
     }
 
     return (
-        <div key={item.id} className={s.root}>
+        <div className={s.root}>
             <Confirm active={active} setActive={() => setActive(!active)} info={info} del={del}/>
             <p>{item.id}</p>
-            {/*<img src={`${process.env.REACT_APP_API_URL}${item.img}`} alt=""/>*/}
             <Carousel images={item.itemsImages}/>
             <p>{item.name}</p>
             <p>{item.description}</p>

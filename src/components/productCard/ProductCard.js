@@ -25,7 +25,7 @@ const ProductCard = ({active, setActive, info}) => {
                     </div>
                     <div className={s.root__info_cont}>
                         <h3>{info.name}</h3>
-                        <p className={s.root__info_cont__p}>{info.description}</p>
+                        <pre className={s.root__info_cont__p}>{info.description}</pre>
                         <h4>{info.price} руб/сутки</h4>
                         <p className={s.root__btn}>В корзину</p>
                     </div>
