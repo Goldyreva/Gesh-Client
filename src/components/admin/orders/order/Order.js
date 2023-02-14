@@ -34,13 +34,14 @@ const Order = ({order, change}) => {
     })
     return (
         <div className={s.root}>
-            <StatusConfirm active={active} setActive={() => setActive(!active)} info={info} change={change}/>
+            <StatusConfirm active={active} setActive={() => setActive(!active)} info={info} change={change} paymentId={order.payment_id} userId={order.userId}/>
             <p>{order.id}</p>
             <CalendarDropdown id={order.id} data={order} add={addAllData}/>
             <ul>
                 <li>ФИО: {order.user.name}</li>
                 <li>E-mail: {order.user.email}</li>
                 <li>Телефон: {order.user.phone}</li>
+                <li>ID платежа: {order.payment_id}</li>
             </ul>
             <ul>
                 <li>ID: {thisItem.id}</li>

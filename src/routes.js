@@ -1,12 +1,30 @@
 import Admin from "./pages/admin/Admin";
-import {ADMIN_ROUTE, HOME_ROUTE, ACCOUNT_ROUTE, QR_ROUTE, TERMS_ROUTE, OFFER_ROUTE} from "./utils/consts";
+import {
+    ADMIN_ROUTE,
+    HOME_ROUTE,
+    ACCOUNT_ROUTE,
+    QR_ROUTE,
+    TERMS_ROUTE,
+    OFFER_ROUTE,
+    PAYMENT_ROUTE, PAYMENT_END_ROUTE
+} from "./utils/consts";
 import Home from "./pages/home/Home";
 import Account from "./pages/account/Account";
 import QrCode from "./pages/qrCode/QrCode";
 import Terms from "./pages/Terms/Terms";
 import Offer from "./pages/Offer/Offer";
+import Payment from "./pages/payment/Payment";
+import Checkout from "./pages/checkout/Checkout";
 
 export const authRoutes = [
+    {
+        path: PAYMENT_ROUTE + '/:confirmationToken',
+        Component: Payment
+    },
+    {
+        path: PAYMENT_END_ROUTE + '/:confirmationToken',
+        Component: Checkout
+    },
     {
         path: ADMIN_ROUTE,
         Component: Admin
@@ -14,7 +32,7 @@ export const authRoutes = [
     {
         path: ACCOUNT_ROUTE + '/:id',
         Component: Account
-    },
+    }
 ]
 
 export const publicRoutes = [

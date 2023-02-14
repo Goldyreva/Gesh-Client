@@ -1,16 +1,34 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {observer} from "mobx-react-lite";
 import s from "./Orders.module.sass";
 import {Context} from "../../../index";
 import Order from "./order/Order";
 import {updateStatus} from "../../../http/orderApi";
+import {confirm, refund} from '../../../http/paymentsApi'
 
 const Orders = observer( () => {
     let {orderDetails} = useContext(Context)
 
-    const changeStatus = async (id, status) => {
-        let data = updateStatus(id, status)
-        orderDetails.setStatus(id, status)
+    const changeStatus = async (id, status, payment_id, userId) => {
+        switch (status) {
+            case 'Обработан':
+                confirm({
+                    payment_id: payment_id,
+                    userId: userId
+                })
+                orderDetails.setStatus(id, status)
+                break
+            case 'Отменен':
+                refund({
+                    payment_id: payment_id
+                })
+                orderDetails.setStatus(id, status)
+                break
+            case 'Завершен':
+                updateStatus(id, status)
+                orderDetails.setStatus(id, status)
+                break
+        }
     }
 
     let sortedList = useMemo(() => {
