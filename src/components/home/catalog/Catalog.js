@@ -6,9 +6,6 @@ import {create} from "../../../http/orderApi";
 import Carousel from "../../carousel/Carousel";
 import AddedConfirm from "../../addedConfirm/AddedConfirm";
 import ProductCard from "../../productCard/ProductCard";
-import {NavLink} from "react-router-dom";
-import {ACCOUNT_ROUTE, ADMIN_ROUTE} from "../../../utils/consts";
-
 
 const Catalog = React.forwardRef((props, forwardRef) => {
     const {item, cart, user, orderDetails, modal} = useContext(Context)
