@@ -5,11 +5,15 @@
   min-height: 100%
   &__content
     flex: 1 0 auto
+    padding: 0 15vw
+    p
+      font-family: 'Open Sans', sans-serif
+      font-size: 20px
   &__content_headertext
     font-family: "Manrope", sans-serif
     font-size: 65px
     font-weight: 800
-    margin: 60px 0 50px 10vw
+    margin: 50px 0
   &__content_form
     margin-top: 25px
   &__footer
@@ -51,7 +55,14 @@
 
   100%
     transform: rotate(360deg)
-
+@media screen and (max-width: 1020px)
+  .root
+    &__content
+      padding: 0 7vw
+      div
+        width: 100%
+    &__content_headertext
+      font-size: 50px
 @media screen and (max-width: 720px)
   .root
     &__content

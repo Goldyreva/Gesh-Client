@@ -48,20 +48,20 @@ const Checkout = () => {
             <div className={s.root__content}>
                 <h1 className={s.root__content_headertext}>Информация о заказе</h1>
                 <div>
-                    <p>Ожидайте звонка оператора для уточнения информации</p>
+                    <p> <b>Ожидайте звонка оператора для уточнения информации</b></p>
                 </div>
                 <div>
-                    <p>Информация о заказе:</p>
+                    <p><b>Информация о заказе:</b></p>
                     {receiptData !== '' &&
                         receiptData[0].items.map(i =>
                             <div key={i.id}>
-                                <p>Номер: {i.description}</p>
-                                <p>{`Цена: ${i.amount.value} руб. * ${i.quantity} д. = ${i.amount.value * i.quantity} руб.`}</p>
+                                <p><b>Номер: </b> {i.description}</p>
+                                <p><b>Цена: </b>{`${i.amount.value} руб. * ${i.quantity} д. = ${i.amount.value * i.quantity} руб.`}</p>
                                 <br/>
                             </div>
                         )
                     }
-                    {payData !== '' && <p>Итого: {payData.amount.value} руб.</p>}
+                    {payData !== '' && <p><b>Итого: {payData.amount.value} руб.</b></p>}
                 </div>
             </div>
             <div className={s.root__footer}>
