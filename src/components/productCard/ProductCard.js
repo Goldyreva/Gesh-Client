@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import s from './ProductCard.module.sass'
 import Carousel from "../carousel/Carousel";
+import {Context} from "../../index";
 
 const ProductCard = ({active, setActive, info, addToCart}) => {
+    const {user, modal} = useContext(Context)
     return (
         <div className={active ? `${s.root} ${s.active}` : `${s.root}`} onClick={() => {
             setActive()
@@ -27,9 +29,21 @@ const ProductCard = ({active, setActive, info, addToCart}) => {
                         <h3>{info.name}</h3>
                         <pre className={s.root__info_cont__p}>{info.description}</pre>
                         <h4>{info.price} руб/сутки</h4>
-                        <p className={s.root__btn} onClick={() => {
-                            addToCart(info.id)
-                        }}>В корзину</p>
+                        {/*<p className={s.root__btn} onClick={() => {*/}
+                        {/*    addToCart(info.id)*/}
+                        {/*}}>В корзину</p>*/}
+                        {user.isAuth
+                            ? <><p onClick={e =>{e.stopPropagation()
+                                addToCart(info.id)
+                            }} className={s.root__btn}>
+                                Забронировать
+                            </p></>
+                            : <><p onClick={e =>{e.stopPropagation()
+                                modal.setActive(true)
+                            }} className={s.root__btn}>
+                                Забронировать
+                            </p></>
+                        }
                     </div>
                 </div>
             </div>
