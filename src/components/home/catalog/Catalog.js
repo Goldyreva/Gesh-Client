@@ -85,10 +85,26 @@ const Catalog = React.forwardRef((props, forwardRef) => {
         }
     }, [startDate, endDate])
 
-    const addItemToCart = (item) => {
-        create(startDate.toISOString(), endDate === null ? new Date(0) : endDate.toISOString(), countDay, user.user.id, item)
+    const addItemToCart = (itemId) => {
+        let itemData
+        for(let i = 0; i < item.items.length; i++) {
+            if(itemId === item.items[i].id) {
+                itemData = item.items[i]
+            }
+        }
+
+        for(let i = 0; i < cart.getCart.length; i++) {
+            if(itemId === cart.getCart[i].itemId) {
+                setConfirmRoom(`Объект "${itemData.name}" уже добавлен в корзину`)
+                setConfirmActive(true)
+                return
+            }
+        }
+
+        create(startDate.toISOString(), endDate === null ? new Date(0) : endDate.toISOString(), countDay, user.user.id, itemId)
             .then(data => {
                 cart.addToCart(data)
+                setConfirmRoom(`Объект "${itemData.name}" добавлен в корзину`)
                 setConfirmActive(true)
             })
     }
@@ -96,8 +112,8 @@ const Catalog = React.forwardRef((props, forwardRef) => {
 
     return (
     <div className={s.root} id="catalog" ref={forwardRef}>
-        <ProductCard active={cardActive} setActive={setCardActive} info={cardInfo}/>
-        <AddedConfirm text={`Объект "${confirmRoom}" добавлен в корзину`} active={confirmActive} setActive={setConfirmActive}/>
+        <ProductCard active={cardActive} setActive={setCardActive} info={cardInfo} addToCart={addItemToCart}/>
+        <AddedConfirm text={confirmRoom} active={confirmActive} setActive={setConfirmActive}/>
         <div className={s.root__header}>
                 <div className={s.root__h2_cont}><h2>КАТАЛОГ ОБЬЕКТОВ</h2></div>
                 <h4>АРЕНДА ДОМОВ</h4>
@@ -197,7 +213,6 @@ const Catalog = React.forwardRef((props, forwardRef) => {
                                 <p className={s.root__cart_p}>{item.description}</p>
                                 <p onClick={e =>{e.stopPropagation()
                                     addItemToCart(item.id)
-                                    setConfirmRoom(item.name)
                                 }} className={s.root__add_btn}>
                                     Забронировать
                                 </p>

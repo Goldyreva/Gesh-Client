@@ -4,6 +4,7 @@ import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import CalendarDropdown from "../calendarDropdown/CalendarDropdown";
 import {deleteOrder, update} from "../../http/orderApi";
+import {create} from "../../http/paymentsApi"
 import {$authHost} from "../../http";
 
 const Cart = observer(() => {
@@ -11,6 +12,7 @@ const Cart = observer(() => {
     const [loading, setLoading] = useState(false)
 
     const [cost, setCost] = useState(0)
+    const [errorMessage, setErrorMessage] = useState("")
 
     const updateCost = () => {
         let c = 0
@@ -51,6 +53,43 @@ const Cart = observer(() => {
                         setLoading(false)
                     })
             })
+    }
+
+    const pay = () => {
+        let error = 0
+        if (cart.getCart.length === 0) {
+            error++
+            setErrorMessage("Пустая корзина")
+        }
+        cart.getCart.map(i => {
+            if (i.end_date === "1970-01-01T00:00:00.000Z" || i.end_date === "") {
+                error++
+                setErrorMessage("Укажиие конечную дату аренды")
+            }
+        })
+
+        if (error === 0) {
+            setErrorMessage("")
+            setLoading(true)
+
+            let ids = ''
+
+            cart.getCart.map(i => {
+                ids += `${i.id},`
+            })
+
+            console.log(ids)
+            create({
+                price: cost,
+                id: ids,
+                userId: user.user.id
+            }).then(data => {
+                console.log(data)
+                let token = data.confirmation.confirmation_token
+                let id = data.id
+                window.location = `${window.location.origin}/payment/${id}_${token}`
+            })
+        }
     }
 
 
@@ -95,9 +134,14 @@ const Cart = observer(() => {
 
                     <h4>ИТОГО: {cost} руб.</h4>
                 </div>
-                <div className={s.root_reg} >
-                    <p className={s.root__btn_submit}>Оплатить</p>
-                </div>
+                {!loading
+                    && <div className={s.root_reg} onClick={() => {
+                        !loading && pay()
+                    }}>
+                        <p className={s.root__btn_submit}>Оплатить</p>
+                    </div>
+                }
+                <p className={s.root__error}>{errorMessage}</p>
             </div>
         </div>
     );

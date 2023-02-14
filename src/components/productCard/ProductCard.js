@@ -2,7 +2,7 @@ import React from 'react';
 import s from './ProductCard.module.sass'
 import Carousel from "../carousel/Carousel";
 
-const ProductCard = ({active, setActive, info}) => {
+const ProductCard = ({active, setActive, info, addToCart}) => {
     return (
         <div className={active ? `${s.root} ${s.active}` : `${s.root}`} onClick={() => {
             setActive()
@@ -27,7 +27,9 @@ const ProductCard = ({active, setActive, info}) => {
                         <h3>{info.name}</h3>
                         <pre className={s.root__info_cont__p}>{info.description}</pre>
                         <h4>{info.price} руб/сутки</h4>
-                        <p className={s.root__btn}>В корзину</p>
+                        <p className={s.root__btn} onClick={() => {
+                            addToCart(info.id)
+                        }}>В корзину</p>
                     </div>
                 </div>
             </div>

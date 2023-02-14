@@ -1,7 +1,7 @@
 import React from 'react';
 import s from "./Confirm.module.sass";
 
-const StatusConfirm = ({active, setActive, info, change}) => {
+const StatusConfirm = ({active, setActive, info, change, paymentId, userId}) => {
 
     return (
         <div className={active ? `${s.root} ${s.active}` : `${s.root}`} onClick={() => setActive()}>
@@ -16,7 +16,7 @@ const StatusConfirm = ({active, setActive, info, change}) => {
                 </div>
                 <div className={s.root__info_cont}>
                     <p className={s.root__btn_submit} onClick={() => {
-                        change(info.id, info.status)
+                        change(info.id, info.status, paymentId, userId)
                         setActive()
                     }}>{info.btn}</p>
                 </div>
