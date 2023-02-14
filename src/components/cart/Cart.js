@@ -78,13 +78,11 @@ const Cart = observer(() => {
                 ids += `${i.id},`
             })
 
-            console.log(ids)
             create({
                 price: cost,
                 id: ids,
                 userId: user.user.id
             }).then(data => {
-                console.log(data)
                 let token = data.confirmation.confirmation_token
                 let id = data.id
                 window.location = `${window.location.origin}/payment/${id}_${token}`
