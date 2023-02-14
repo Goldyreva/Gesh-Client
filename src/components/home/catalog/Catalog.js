@@ -6,10 +6,12 @@ import {create} from "../../../http/orderApi";
 import Carousel from "../../carousel/Carousel";
 import AddedConfirm from "../../addedConfirm/AddedConfirm";
 import ProductCard from "../../productCard/ProductCard";
+import {NavLink} from "react-router-dom";
+import {ACCOUNT_ROUTE, ADMIN_ROUTE} from "../../../utils/consts";
 
 
 const Catalog = React.forwardRef((props, forwardRef) => {
-    const {item, cart, user, orderDetails} = useContext(Context)
+    const {item, cart, user, orderDetails, modal} = useContext(Context)
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
@@ -211,11 +213,19 @@ const Catalog = React.forwardRef((props, forwardRef) => {
                             </div>
                             <div className={s.root__cart_content}>
                                 <p className={s.root__cart_p}>{item.description}</p>
-                                <p onClick={e =>{e.stopPropagation()
-                                    addItemToCart(item.id)
-                                }} className={s.root__add_btn}>
-                                    Забронировать
-                                </p>
+                                {user.isAuth
+                                    ? <><p onClick={e =>{e.stopPropagation()
+                                            addItemToCart(item.id)
+                                        }} className={s.root__add_btn}>
+                                            Забронировать
+                                        </p></>
+                                    : <><p onClick={e =>{e.stopPropagation()
+                                        modal.setActive(true)
+                                        }} className={s.root__add_btn}>
+                                            Забронировать
+                                        </p></>
+                                }
+
                                 <p className={s.root__info_btn}>Узнать подробнее</p>
                             </div>
                         </div>
