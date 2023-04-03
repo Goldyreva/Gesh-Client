@@ -1,6 +1,6 @@
 import React from 'react';
 import s from "./Banner.module.sass";
-import bannerBg from '../../../img/bannerBg.jpg'
+import bannerBg from '../../../img/bannerBg.png'
 
 const Banner = React.forwardRef((props, forwardRef) => {
     return (

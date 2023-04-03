@@ -35,10 +35,10 @@ const Home = () => {
         <div className={s.root}>
             <Banner ref={blocks.banner}/>
             <div className={s.root__main}>
-                <About ref={blocks.about}/>
+                {/*<About ref={blocks.about}/>*/}
                 <Catalog ref={blocks.catalog}/>
-                <Locate ref={blocks.locate}/>
-                <Tourist/>
+                {/*<Locate ref={blocks.locate}/>*/}
+                {/*<Tourist/>*/}
                 <Map ref={blocks.map}/>
                 <Footer/>
                 <BottomMenu/>

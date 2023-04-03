@@ -30,15 +30,15 @@ const Menu = observer(() => {
                             : <a onClick={popUpLink}>Личный кабинет</a>
                         }
                     </li>
-                    <li>
-                        <NavLink to={HOME_ROUTE + "about"} onClick={() => menu.setActive(false)}>О проекте</NavLink>
-                    </li>
+                    {/*<li>*/}
+                    {/*    <NavLink to={HOME_ROUTE + "about"} onClick={() => menu.setActive(false)}>О проекте</NavLink>*/}
+                    {/*</li>*/}
                     <li>
                         <NavLink to={HOME_ROUTE + "catalog"} onClick={() => menu.setActive(false)}>Каталог объектов</NavLink>
                     </li>
-                    <li>
-                        <NavLink to={HOME_ROUTE + "locate"} onClick={() => menu.setActive(false)}>Местоположение</NavLink>
-                    </li>
+                    {/*<li>*/}
+                    {/*    <NavLink to={HOME_ROUTE + "locate"} onClick={() => menu.setActive(false)}>Местоположение</NavLink>*/}
+                    {/*</li>*/}
                 </ul>
             </div>
         </div>
